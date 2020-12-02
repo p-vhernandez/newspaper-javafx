@@ -25,15 +25,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -54,26 +59,80 @@ public class NewsReaderController {
 	@FXML
 	private ListView<Article> listArticles;
 
-	private User usr;
+	@FXML
+	private ComboBox<Categories> selectorCategory;
 
-	//TODO add attributes and methods as needed
+	@FXML
+	private ImageView articleImage;
+
+	@FXML
+	private WebView articleAbstract;
+
+	@FXML
+	private Button btnReadMore;
+
+	private User usr;
+	private Article selectedArticle;
 
 	public NewsReaderController() {
 		// TODO
 		// Uncomment next sentence to use data from server instead dummy data
-		// newsReaderModel.setDummyDate(false);
+		newsReaderModel.setDummyData(true);
 		// Get text Label		
 	}
 
 	@FXML
 	void initialize() {
 		getData();
+		setListeners();
+		showArticleData();
 	}
 
 	private void getData() {
-		// TODO retrieve data and update UI
 		newsReaderModel.retrieveData();
+
+		selectedArticle = newsReaderModel.getArticles().get(0);
+		
 		listArticles.setItems(newsReaderModel.getArticles());
+		listArticles.getSelectionModel().select(0);
+
+		selectorCategory.setItems(newsReaderModel.getCategories());
+	}
+
+	/**
+	 * Set the listeners to show changes
+	 * in the screen when an element is clicked
+	 **/ 
+	private void setListeners() {
+		listArticles.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Article>() {
+			@Override
+			public void changed(ObservableValue<? extends Article> observable, Article oldValue, Article newValue) {
+				// TODO: show article's details in the page
+				selectedArticle = newValue;
+				showArticleData();
+			}
+		});
+
+		selectorCategory.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Categories>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Categories> arg0, Categories arg1, Categories arg2) {
+				// TODO: filter articles by category
+			}
+		});
+	}
+
+	@FXML
+	private void readMore() {
+		System.out.println("READ MORE CLICKED");
+	}
+
+	private void showArticleData() {
+		articleImage.setImage(selectedArticle.getImageData());
+		articleImage.setPreserveRatio(true);
+
+		WebEngine engine = articleAbstract.getEngine();
+		engine.loadContent(selectedArticle.getAbstractText());
 	}
 
 	/**
