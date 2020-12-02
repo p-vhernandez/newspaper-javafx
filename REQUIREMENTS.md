@@ -8,6 +8,10 @@ The mandatory version will work with only one user. The user and password will b
 
 The extra exercise consists in define and use a login form. In this case, students will be provided with two or more users and passwords. In this scenario, when user selects ‘login’ a new form will be displayed. This form will provide all functionalities needed for login process. Maximum grade for mandatory version plus extra exercise eight points.
 
+[News manager demo](https://web.microsoftstream.com/video/41cf1813-3f3a-47a1-9f56-b63c0696a6c7)
+[Provided code](https://web.microsoftstream.com/video/7b42b2a5-fbcd-41b5-b9b0-1f61b9db73ef)
+[JavaFX project](https://web.microsoftstream.com/video/bcb95dca-56d9-4ee4-8165-8a3288d89087)
+
 **Type of users**
 - Public users (no login needed)
     - Access to all published articles
