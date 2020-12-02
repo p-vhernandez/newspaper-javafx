@@ -62,6 +62,7 @@ The extra exercise consists in define and use a login form. In this case, studen
 [Article details window structure](resources/images/git/article-details.PNG)
 
 **Form for editing and creating articles**
+
 This screen provides services for:
 - Add an image:
     - The provided form "ImagePicker" can be used to implement this functionality
