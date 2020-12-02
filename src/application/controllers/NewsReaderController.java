@@ -20,6 +20,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -30,6 +31,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
@@ -37,7 +40,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
@@ -71,6 +73,9 @@ public class NewsReaderController {
 	@FXML
 	private Button btnReadMore;
 
+	@FXML
+	private MenuButton btnMenu;
+
 	private User usr;
 	private Article selectedArticle;
 
@@ -78,7 +83,6 @@ public class NewsReaderController {
 		// TODO
 		// Uncomment next sentence to use data from server instead dummy data
 		newsReaderModel.setDummyData(true);
-		// Get text Label		
 	}
 
 	@FXML
@@ -102,7 +106,7 @@ public class NewsReaderController {
 	/**
 	 * Set the listeners to show changes
 	 * in the screen when an element is clicked
-	 **/ 
+	 */ 
 	private void setListeners() {
 		listArticles.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Article>() {
 			@Override
@@ -120,6 +124,13 @@ public class NewsReaderController {
 				// TODO: filter articles by category
 			}
 		});
+
+		btnMenu.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO: differenciate actions and add functionalities
+			}
+		});
 	}
 
 	@FXML
@@ -127,9 +138,40 @@ public class NewsReaderController {
 		System.out.println("READ MORE CLICKED");
 	}
 
+	@FXML
+	private void btnMenuClicked() {
+		System.out.println("MENU CLICKED");
+	}
+
+	@FXML
+	private void btnLoadArticleClicked() {
+		System.out.println("LOAD ARTICLE CLICKED");
+	}
+
+	@FXML
+	private void btnNewArticleClicked() {
+		System.out.println("NEW ARTICLE CLICKED");
+	}
+
+	@FXML
+	private void btnEditArticleClicked() {
+		System.out.println("EDIT ARTICLE CLICKED");
+	}
+
+	@FXML
+	private void btnDeleteArticleClicked() {
+		System.out.println("DELETE ARTICLE CLICKED");
+	}
+
+	@FXML
+	private void btnExitClicked() {
+		System.out.println("EXIT CLICKED");
+	}
+
 	private void showArticleData() {
-		articleImage.setImage(selectedArticle.getImageData());
-		articleImage.setPreserveRatio(true);
+		if (selectedArticle.getImageData() != null) {
+			articleImage.setImage(selectedArticle.getImageData());
+		}
 
 		WebEngine engine = articleAbstract.getEngine();
 		engine.loadContent(selectedArticle.getAbstractText());

@@ -49,7 +49,7 @@ public class Main extends Application {
 			Properties prop = buildServerProperties();
 			ConnectionManager connection = new ConnectionManager(prop);
 			// Connecting as public (anonymous) for your group
-			connection.setAnonymousAPIKey("DEV_TEAM_3553");
+			// connection.setAnonymousAPIKey("DEV_TEAM_3553");
 
 			// Login without login form:
 			// connection.login("Reader2", "reader2"); //User: Reader2 and password "reader2" 
@@ -57,7 +57,7 @@ public class Main extends Application {
 			// Integer.parseInt(connection.getIdUser()));
 			// controller.setUsr(user);
 			
-			controller.setConnectionManager(connection);		
+			// controller.setConnectionManager(connection);		
 			
 			// end code for main window reader
 			
