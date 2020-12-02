@@ -6,6 +6,7 @@ package application.controllers;
 import java.io.File;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.function.Predicate;
 
 import application.models.NewsReaderModel;
@@ -26,6 +27,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -48,21 +50,30 @@ import serverConection.ConnectionManager;
 public class NewsReaderController {
 
 	private NewsReaderModel newsReaderModel = new NewsReaderModel();
+
+	@FXML
+	private ListView<Article> listArticles;
+
 	private User usr;
 
 	//TODO add attributes and methods as needed
 
 	public NewsReaderController() {
-		//TODO
-		//Uncomment next sentence to use data from server instead dummy data
-		//newsReaderModel.setDummyDate(false);
-		//Get text Label
-		
+		// TODO
+		// Uncomment next sentence to use data from server instead dummy data
+		// newsReaderModel.setDummyDate(false);
+		// Get text Label		
+	}
+
+	@FXML
+	void initialize() {
+		getData();
 	}
 
 	private void getData() {
-		//TODO retrieve data and update UI
-		//The method newsReaderModel.retrieveData() can be used to retrieve data  
+		// TODO retrieve data and update UI
+		newsReaderModel.retrieveData();
+		listArticles.setItems(newsReaderModel.getArticles());
 	}
 
 	/**

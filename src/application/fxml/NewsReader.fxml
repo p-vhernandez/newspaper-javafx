@@ -1,13 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
-
-<AnchorPane prefHeight="400.0" 
-            prefWidth="500.0" 
-            xmlns="http://javafx.com/javafx/8.0.171" 
-            xmlns:fx="http://javafx.com/fxml/1" 
-            fx:controller="application.controllers.NewsReaderController">
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
 
-            
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.NewsReaderController">
+   <children>
+
+      <HBox layoutX="300.0" layoutY="250.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         
+         <children>
+            <VBox prefHeight="200.0" prefWidth="250.0">
+               
+               <children>
+                  <ListView fx:id="listArticles" 
+                            prefHeight="200.0" 
+                            prefWidth="200.0">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="20.0" />
+                     </VBox.margin>
+                  </ListView>
+
+               </children>
+
+            </VBox>
+         </children>
+
+      </HBox>
+
+   </children>
 </AnchorPane>

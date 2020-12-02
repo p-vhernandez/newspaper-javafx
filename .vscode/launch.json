@@ -9,6 +9,13 @@
             "name": "CodeLens (Launch) - NewspaperApp",
             "request": "launch",
             "mainClass": "application.NewspaperApp",
+            "projectName": "newspaper-javafx_77776706"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - NewspaperApp",
+            "request": "launch",
+            "mainClass": "application.NewspaperApp",
             "projectName": "newsManager20-21Students_342925aa"
         },
         {

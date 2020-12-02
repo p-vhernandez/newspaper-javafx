@@ -63,7 +63,8 @@ public class Main extends Application {
 			
 			Scene scene = new Scene(root);
 			scene.getStylesheets().add(getClass().getResource("css/application.css").toExternalForm());
-			primaryStage.initStyle(StageStyle.UNDECORATED);
+			primaryStage.setTitle("Newspaper");
+			primaryStage.initStyle(StageStyle.DECORATED);
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(AuthenticationError e) {
