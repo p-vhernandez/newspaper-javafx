@@ -2,6 +2,11 @@
 
 This application allows manage and read articles.
 
+**Project info**
+The mandatory version will work with only one user. The user and password will be provided for each group. See the code documentation to know how to use it. When user selects ‘login’, this version will use the provided user and password. Maximum grade for mandatory version is eight points.
+
+The extra exercise consists in define and use a login form. In this case, students will be provided with two or more users and passwords. In this scenario, when user selects ‘login’ a new form will be displayed. This form will provide all functionalities needed for login process. Maximum grade for mandatory version plus extra exercise eight points.
+
 **Type of users**
 - Public users (no login needed)
     - Access to all published articles
@@ -15,3 +20,63 @@ This application allows manage and read articles.
   
   
 **Main window**
+- List of published articles (login is not required)
+- Login
+- New:
+    - Login is not required
+    - Allows to create a new article
+    - Only logged users can send articles to server
+    - Users can save article to a file (login is not required)
+- Load an article from a file
+- Edit:
+    - Login is required
+    - Only articles belonging to the user can be edited
+- Delete:
+    - Login is required
+    - Only articles belonging to the user can be deleted
+- Exit
+- Headlines list:
+    - Shows a list of headlines
+    - When user selects a headline:
+        - Command "read more" will be enabled
+        - Article image will be shown
+        - Abstract will be shown
+        - If the article belongs to the user, "edit" will be enabled
+        - If the article belongs to the user, "delete" will be enabled
+- Category filter:
+    - Filter headlines that will be listed 
+    - Only headlines with the selected category will be listed
+    - If category is equal to "ALL", all headlines will be listed
+- Read more:
+    - Allows user to acces the selected article details
+    
+[Main window structure](resources/images/git/main-window.PNG)
+
+**Form for article details**
+- Always display article details
+- At the beginning, this form shows the article body
+- Switch between body and abstract
+- Back to the previous form
+
+[Article details window structure](resources/images/git/article-details.PNG)
+
+**Form for editing and creating articles**
+This screen provides services for:
+- Add an image:
+    - The provided form "ImagePicker" can be used to implement this functionality
+- Add title
+- Add subtitle
+- Set article's category
+- Add abstract:
+    - Can be in plain text or HTML
+- Add body:
+    - Can be in plain text or HTML
+- Send the new or modify the existing to the server and go back to the main window. (Title and category must have been defined)
+- Save a draft to a file:
+    - This command saves the article to a file in the local machine
+    - This draft could be loaded again for editing or send it to a server
+    - To save an article, title must have been defined
+- Back:
+    - This command discards all changes made since last "save to file" command
+    
+[Edit & create window structure](resources/images/git/edit-and-create-news.PNG)
