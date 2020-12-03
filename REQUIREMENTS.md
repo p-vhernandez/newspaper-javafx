@@ -27,7 +27,7 @@ The extra exercise consists in define and use a login form. In this case, studen
   
   
 **Main window**
-- [ ] List of published articles (login is not required)
+- [x] List of published articles (login is not required)
 - [ ] Login
 - [ ] New:
     - Login is not required
@@ -45,12 +45,12 @@ The extra exercise consists in define and use a login form. In this case, studen
 - [ ] Headlines list:
     - Shows a list of headlines
     - When user selects a headline:
-        - [ ] Command "read more" will be enabled
-        - [ ] Article image will be shown
-        - [ ] Abstract will be shown
+        - [x] Command "read more" will be enabled
+        - [x] Article image will be shown
+        - [x] Abstract will be shown
         - [ ] If the article belongs to the user, "edit" will be enabled
         - [ ] If the article belongs to the user, "delete" will be enabled
-- [ ] Category filter:
+- [x] Category filter:
     - Filter headlines that will be listed 
     - Only headlines with the selected category will be listed
     - If category is equal to "ALL", all headlines will be listed
@@ -70,21 +70,21 @@ The extra exercise consists in define and use a login form. In this case, studen
 **Form for editing and creating articles**
 
 This screen provides services for:
-- Add an image:
+- [ ] Add an image:
     - The provided form "ImagePicker" can be used to implement this functionality
-- Add title
-- Add subtitle
-- Set article's category
-- Add abstract:
+- [ ] Add title
+- [ ] Add subtitle
+- [ ] Set article's category
+- [ ] Add abstract:
     - Can be in plain text or HTML
-- Add body:
+- [ ] Add body:
     - Can be in plain text or HTML
-- Send the new or modify the existing to the server and go back to the main window. (Title and category must have been defined)
-- Save a draft to a file:
+- [ ] Send the new or modify the existing to the server and go back to the main window. (Title and category must have been defined)
+- [ ] Save a draft to a file:
     - This command saves the article to a file in the local machine
     - This draft could be loaded again for editing or send it to a server
     - To save an article, title must have been defined
-- Back:
+- [ ] Back:
     - This command discards all changes made since last "save to file" command
     
 [Edit & create window structure](resources/images/git/edit-and-create-news.PNG)
