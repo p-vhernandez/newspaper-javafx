@@ -27,43 +27,43 @@ The extra exercise consists in define and use a login form. In this case, studen
   
   
 **Main window**
-- List of published articles (login is not required)
-- Login
-- New:
+- [ ] List of published articles (login is not required)
+- [ ] Login
+- [ ] New:
     - Login is not required
     - Allows to create a new article
     - Only logged users can send articles to server
     - Users can save article to a file (login is not required)
-- Load an article from a file
-- Edit:
+- [ ] Load an article from a file
+- [ ] Edit:
     - Login is required
     - Only articles belonging to the user can be edited
-- Delete:
+- [ ] Delete:
     - Login is required
     - Only articles belonging to the user can be deleted
-- Exit
-- Headlines list:
+- [ ] Exit
+- [ ] Headlines list:
     - Shows a list of headlines
     - When user selects a headline:
-        - Command "read more" will be enabled
-        - Article image will be shown
-        - Abstract will be shown
-        - If the article belongs to the user, "edit" will be enabled
-        - If the article belongs to the user, "delete" will be enabled
-- Category filter:
+        - [ ] Command "read more" will be enabled
+        - [ ] Article image will be shown
+        - [ ] Abstract will be shown
+        - [ ] If the article belongs to the user, "edit" will be enabled
+        - [ ] If the article belongs to the user, "delete" will be enabled
+- [ ] Category filter:
     - Filter headlines that will be listed 
     - Only headlines with the selected category will be listed
     - If category is equal to "ALL", all headlines will be listed
-- Read more:
+- [ ] Read more:
     - Allows user to acces the selected article details
     
 [Main window structure](resources/images/git/main-window.PNG)
 
 **Form for article details**
-- Always display article details
-- At the beginning, this form shows the article body
-- Switch between body and abstract
-- Back to the previous form
+- [ ] Always display article details
+- [ ] At the beginning, this form shows the article body
+- [ ] Switch between body and abstract
+- [ ] Back to the previous form
 
 [Article details window structure](resources/images/git/article-details.PNG)
 
