@@ -8,6 +8,12 @@ The mandatory version will work with only one user. The user and password will b
 
 The extra exercise consists in define and use a login form. In this case, students will be provided with two or more users and passwords. In this scenario, when user selects ‘login’ a new form will be displayed. This form will provide all functionalities needed for login process. Maximum grade for mandatory version plus extra exercise eight points.
 
+[News manager demo](https://web.microsoftstream.com/video/41cf1813-3f3a-47a1-9f56-b63c0696a6c7)
+
+[Provided code](https://web.microsoftstream.com/video/7b42b2a5-fbcd-41b5-b9b0-1f61b9db73ef)
+
+[JavaFX project](https://web.microsoftstream.com/video/bcb95dca-56d9-4ee4-8165-8a3288d89087)
+
 **Type of users**
 - Public users (no login needed)
     - Access to all published articles
@@ -21,43 +27,43 @@ The extra exercise consists in define and use a login form. In this case, studen
   
   
 **Main window**
-- List of published articles (login is not required)
-- Login
-- New:
+- [ ] List of published articles (login is not required)
+- [ ] Login
+- [ ] New:
     - Login is not required
     - Allows to create a new article
     - Only logged users can send articles to server
     - Users can save article to a file (login is not required)
-- Load an article from a file
-- Edit:
+- [ ] Load an article from a file
+- [ ] Edit:
     - Login is required
     - Only articles belonging to the user can be edited
-- Delete:
+- [ ] Delete:
     - Login is required
     - Only articles belonging to the user can be deleted
-- Exit
-- Headlines list:
+- [ ] Exit
+- [ ] Headlines list:
     - Shows a list of headlines
     - When user selects a headline:
-        - Command "read more" will be enabled
-        - Article image will be shown
-        - Abstract will be shown
-        - If the article belongs to the user, "edit" will be enabled
-        - If the article belongs to the user, "delete" will be enabled
-- Category filter:
+        - [ ] Command "read more" will be enabled
+        - [ ] Article image will be shown
+        - [ ] Abstract will be shown
+        - [ ] If the article belongs to the user, "edit" will be enabled
+        - [ ] If the article belongs to the user, "delete" will be enabled
+- [ ] Category filter:
     - Filter headlines that will be listed 
     - Only headlines with the selected category will be listed
     - If category is equal to "ALL", all headlines will be listed
-- Read more:
+- [ ] Read more:
     - Allows user to acces the selected article details
     
 [Main window structure](resources/images/git/main-window.PNG)
 
 **Form for article details**
-- Always display article details
-- At the beginning, this form shows the article body
-- Switch between body and abstract
-- Back to the previous form
+- [ ] Always display article details
+- [ ] At the beginning, this form shows the article body
+- [ ] Switch between body and abstract
+- [ ] Back to the previous form
 
 [Article details window structure](resources/images/git/article-details.PNG)
 
