@@ -106,17 +106,12 @@ public class NewsReaderController {
 		getData();
 		setListeners();
 		checkMenuItems();
-		showArticleData();
 	}
 
 	private void getData() {
 		newsReaderModel.retrieveData();
-
-		selectedArticle = newsReaderModel.getArticles().get(0);
 		
 		listArticles.setItems(newsReaderModel.getArticles());
-		listArticles.getSelectionModel().select(0);
-
 		selectorCategory.setItems(newsReaderModel.getCategories());
 	}
 
@@ -128,9 +123,9 @@ public class NewsReaderController {
 		listArticles.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Article>() {
 			@Override
 			public void changed(ObservableValue<? extends Article> observable, Article oldValue, Article newValue) {
-				// TODO: show article's details in the page
 				selectedArticle = newValue;
 				showArticleData();
+				enableReadMore();
 			}
 		});
 
@@ -148,23 +143,12 @@ public class NewsReaderController {
 				}
 			}
 		});
-
-		btnMenu.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent arg0) {
-				// TODO: differenciate actions and add functionalities
-			}
-		});
 	}
 
 	@FXML
 	private void readMore() {
+		// TODO: go to article details
 		System.out.println("READ MORE CLICKED");
-	}
-
-	@FXML
-	private void btnMenuClicked() {
-		System.out.println("MENU CLICKED");
 	}
 
 	@FXML
@@ -193,12 +177,14 @@ public class NewsReaderController {
 	}
 
 	private void showArticleData() {
-		if (selectedArticle.getImageData() != null) {
-			articleImage.setImage(selectedArticle.getImageData());
-		}
+		if (selectedArticle != null) {
+			if (selectedArticle.getImageData() != null) {
+				articleImage.setImage(selectedArticle.getImageData());
+			}
 
-		WebEngine engine = articleAbstract.getEngine();
-		engine.loadContent(selectedArticle.getAbstractText());
+			WebEngine engine = articleAbstract.getEngine();
+			engine.loadContent(selectedArticle.getAbstractText());
+		}
 	}
 
 	public void setConnectionManager (ConnectionManager connection){
@@ -219,6 +205,14 @@ public class NewsReaderController {
 			btnEditArticle.setDisable(true);
 			btnDeleteArticle.setDisable(true);
 		}
+	}
+
+	private void enableReadMore() {
+		btnReadMore.setDisable(false);
+	}
+
+	private void disableReadMore() {
+		btnReadMore.setDisable(true);
 	}
 	
 	/**
