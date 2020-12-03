@@ -76,6 +76,18 @@ public class NewsReaderController {
 	@FXML
 	private MenuButton btnMenu;
 
+	@FXML
+	private MenuItem btnLoadArticle;
+
+	@FXML
+	private MenuItem btnNewArticle;
+
+	@FXML
+	private MenuItem btnEditArticle;
+
+	@FXML
+	private MenuItem btnDeleteArticle;
+
 	private User usr;
 	private Article selectedArticle;
 
@@ -89,6 +101,7 @@ public class NewsReaderController {
 	void initialize() {
 		getData();
 		setListeners();
+		checkMenuItems();
 		showArticleData();
 	}
 
@@ -177,28 +190,42 @@ public class NewsReaderController {
 		engine.loadContent(selectedArticle.getAbstractText());
 	}
 
-	/**
-	 * @return the usr
-	 */
-	public User getUsr() {
-		return usr;
-	}
-
 	public void setConnectionManager (ConnectionManager connection){
 		this.newsReaderModel.setDummyData(false); //System is connected so dummy data are not needed
 		this.newsReaderModel.setConnectionManager(connection);
 		this.getData();
+	}
+
+	private void checkMenuItems() {
+		if (this.usr != null) {
+			btnLoadArticle.setDisable(false);
+			btnNewArticle.setDisable(false);
+			btnEditArticle.setDisable(false);
+			btnDeleteArticle.setDisable(false);
+		} else {
+			btnLoadArticle.setDisable(false);
+			btnNewArticle.setDisable(false);
+			btnEditArticle.setDisable(true);
+			btnDeleteArticle.setDisable(true);
+		}
 	}
 	
 	/**
 	 * @param usr the usr to set
 	 */
 	public void setUsr(User usr) {
-		
 		this.usr = usr;
-		//Reload articles
+
+		// Reload articles
 		this.getData();
-		//TODO Update UI
+		checkMenuItems();
+	}
+
+	/**
+	 * @return the usr
+	 */
+	public User getUsr() {
+		return usr;
 	}
 
 }
