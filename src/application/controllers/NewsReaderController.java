@@ -7,7 +7,10 @@ import java.io.File;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Observable;
 import java.util.function.Predicate;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import application.models.NewsReaderModel;
 import application.news.Article;
@@ -18,6 +21,7 @@ import application.utils.exceptions.ErrorMalFormedArticle;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -133,8 +137,15 @@ public class NewsReaderController {
 		selectorCategory.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Categories>() {
 
 			@Override
-			public void changed(ObservableValue<? extends Categories> arg0, Categories arg1, Categories arg2) {
-				// TODO: filter articles by category
+			public void changed(ObservableValue<? extends Categories> observable, Categories oldValue, Categories newValue) {
+				ObservableList<Article> allArticles = newsReaderModel.getArticles();
+
+				if (newValue.equals(Categories.ALL)) {
+					listArticles.setItems(allArticles);
+				} else {
+					Predicate<Article> byCategory = article -> article.getCategory().equals(newValue.toString());
+					listArticles.setItems(allArticles.filtered(byCategory));
+				}
 			}
 		});
 
