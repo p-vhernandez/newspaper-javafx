@@ -46,7 +46,24 @@ public class ArticleEditController {
 	private ArticleEditModel editingArticle;
 	private User usr;
 
-	//TODO add attributes and methods as needed
+	private NewsReaderController newsReaderController;
+	private Pane root;
+
+	public ArticleEditController(NewsReaderController newsReaderController) {
+		this.newsReaderController = newsReaderController;
+
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.EDITOR.getFxmlFile()));
+			loader.setController(this);
+			root = loader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public Pane getContent() {
+		return root;
+	}
 
 	@FXML
 	void onImageClicked(MouseEvent event) {

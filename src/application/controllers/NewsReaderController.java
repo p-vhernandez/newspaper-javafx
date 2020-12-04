@@ -4,6 +4,7 @@
 package application.controllers;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import application.AppScenes;
 import application.models.NewsReaderModel;
 import application.news.Article;
 import application.news.Categories;
@@ -28,6 +30,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -43,6 +46,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -60,8 +64,6 @@ import serverConection.ConnectionManager;
  */
 public class NewsReaderController {
 
-	private NewsReaderModel newsReaderModel = new NewsReaderModel();
-
 	@FXML
 	private ListView<Article> listArticles;
 
@@ -76,6 +78,9 @@ public class NewsReaderController {
 
 	@FXML
 	private Button btnReadMore;
+
+	@FXML
+	private Button btnLogin;
 
 	@FXML
 	private MenuButton btnMenu;
@@ -93,12 +98,25 @@ public class NewsReaderController {
 	private MenuItem btnDeleteArticle;
 
 	private User usr;
+	private Pane root;
 	private Article selectedArticle;
 
+	private NewsReaderModel newsReaderModel = new NewsReaderModel();
+
 	public NewsReaderController() {
-		// TODO
-		// Uncomment next sentence to use data from server instead dummy data
 		newsReaderModel.setDummyData(true);
+
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.READER.getFxmlFile()));
+			loader.setController(this);
+			root = loader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public Pane getContent() {
+		return root;
 	}
 
 	@FXML
@@ -145,10 +163,33 @@ public class NewsReaderController {
 		});
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	@FXML
-	private void readMore() {
-		// TODO: go to article details
-		System.out.println("READ MORE CLICKED");
+	private void readMore(ActionEvent event) {
+		try {
+			ArticleDetailsController detailsController = new ArticleDetailsController(this);
+			detailsController.setArticle(selectedArticle);
+
+			Button eventOrigin = (Button) event.getSource();
+			eventOrigin.getScene().setRoot(detailsController.getContent());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@FXML
+	private void btnLoginClicked(ActionEvent event) {
+		try {
+			LoginController loginController = new LoginController(this);
+
+			Button eventOrigin = (Button) event.getSource();
+			eventOrigin.getScene().setRoot(loginController.getContent());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
@@ -162,13 +203,29 @@ public class NewsReaderController {
 	}
 
 	@FXML
-	private void btnEditArticleClicked() {
-		System.out.println("EDIT ARTICLE CLICKED");
+	private void btnEditArticleClicked(ActionEvent event) {
+		if (selectedArticle != null) {
+			try {
+				ArticleEditController editController = new ArticleEditController(this);
+				editController.setArticle(selectedArticle);
+
+				Button eventOrigin = (Button) event.getSource();
+				eventOrigin.getScene().setRoot(editController.getContent());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Want to edit an article?");
+			alert.setContentText("An article must be selected in order to edit it.");
+			alert.showAndWait();
+		}
 	}
 
 	@FXML
 	private void btnDeleteArticleClicked() {
 		System.out.println("DELETE ARTICLE CLICKED");
+		// TODO: deletion functionality
 	}
 
 	@FXML
@@ -199,11 +256,13 @@ public class NewsReaderController {
 			btnNewArticle.setDisable(false);
 			btnEditArticle.setDisable(false);
 			btnDeleteArticle.setDisable(false);
+			btnLogin.setVisible(false);
 		} else {
 			btnLoadArticle.setDisable(false);
 			btnNewArticle.setDisable(false);
 			btnEditArticle.setDisable(true);
 			btnDeleteArticle.setDisable(true);
+			btnLogin.setVisible(true);
 		}
 	}
 

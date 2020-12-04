@@ -12,6 +12,7 @@ import application.controllers.NewsReaderController;
 
 import application.news.Article;
 import application.news.Categories;
+import application.news.User;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,53 +27,49 @@ import javafx.fxml.FXMLLoader;
 
 public class Main extends Application {
 
+	private ConnectionManager connection;
+	private NewsReaderController newsReaderController;
+
 	@Override
-	public void start(Stage primaryStage) {
-		try {
-			// This start method allow us to load a Scene (only one).
-			// Uncomment the desire to load scene and comment the other ones 
+	public void start(Stage primaryStage) {		
+		newsReaderController = new NewsReaderController();
+		Pane root = newsReaderController.getContent();
+		// setConnection();
 
-			/*
-			 * We use an instance of Pane, so we don't worry about what kind of pane is used
-			 * in the FXML file. Pane is the father of all container (BorderPane, 
-			 * FlowPane, AnchorPane ...
-			 */
-			/*Pane root = FXMLLoader.load(getClass().getResource(AppScenes.LOGIN.getFxmlFile()));*/
-			/*Pane root = FXMLLoader.load(getClass().getResource(AppScenes.IMAGE_PICKER.getFxmlFile()));*/
-
-			// Code for reader main window
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.READER.getFxmlFile()));
-			Pane root = loader.load();
-			NewsReaderController controller = loader.<NewsReaderController>getController();
+		Scene scene = new Scene(root);
+		scene.getStylesheets().add(getClass().getResource("css/application.css").toExternalForm());
+		primaryStage.setTitle("Newspaper");
+		primaryStage.initStyle(StageStyle.DECORATED);
+		primaryStage.setScene(scene);
+		primaryStage.show();
 		
+	}
+
+	private void setConnection() {
+		try {
 			// Create properties for server connection
 			Properties prop = buildServerProperties();
-			ConnectionManager connection = new ConnectionManager(prop);
-			// Connecting as public (anonymous) for your group
-			// connection.setAnonymousAPIKey("DEV_TEAM_3553");
+			connection = new ConnectionManager(prop);
 
-			// Login without login form:
-			// connection.login("Reader2", "reader2"); //User: Reader2 and password "reader2" 
-			// User user = new User ("Reader2", 
-			// Integer.parseInt(connection.getIdUser()));
-			// controller.setUsr(user);
-			
-			// controller.setConnectionManager(connection);		
-			
-			// end code for main window reader
-			
-			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("css/application.css").toExternalForm());
-			primaryStage.setTitle("Newspaper");
-			primaryStage.initStyle(StageStyle.DECORATED);
-			primaryStage.setScene(scene);
-			primaryStage.show();
+			// Connecting as public (anonymous) for your group
+			connection.setAnonymousAPIKey("DEV_TEAM_3553");
+			defaultLogin();
+			newsReaderController.setConnectionManager(connection);	
 		} catch(AuthenticationError e) {
 			Logger.getGlobal().log(Level.SEVERE, "Error in loging process");
 			e.printStackTrace();
-		} catch (IOException e) {
+		} 
+	}
+
+	public void defaultLogin() {
+		try {
+			// Login without login form:
+			connection.login("Reader2", "reader2");
+			User user = new User("Reader2", Integer.parseInt(connection.getIdUser()));
+			newsReaderController.setUsr(user);
+		} catch (AuthenticationError e) {
 			e.printStackTrace();
-		}
+		} 
 	}
 	
 	final static Properties buildServerProperties() {

@@ -4,7 +4,6 @@
 package application.models;
 
 import java.io.IOException;
-//import java.util.Date;
 import java.util.List;
 
 import application.news.Article;
