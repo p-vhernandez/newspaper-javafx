@@ -9,27 +9,20 @@
             "name": "CodeLens (Launch) - NewspaperApp",
             "request": "launch",
             "mainClass": "application.NewspaperApp",
-            "projectName": "newsManager20-21Students_342925aa"
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - App",
-            "request": "launch",
-            "mainClass": "App",
-            "projectName": "newsManager20-21Students_342925aa"
+            "projectName": "newspaper-javafx_77776706"
         },
         {
             "type": "java",
             "name": "Debug (Launch) - Current File",
             "request": "launch",
-            "vmArgs": "--module-path C:\\JavaFX\\javafx-sdk-15.0.1\\lib --add-modules javafx.controls,javafx.fxml",
+            "vmArgs": "--module-path C:\\JavaFX\\javafx-sdk-15.0.1\\lib --add-modules javafx.controls,javafx.fxml,javafx.web",
             "mainClass": "${file}"
         },
         {
             "type": "java",
             "name": "Debug (Launch)-Main<newsManager20-21Students_342925aa>",
             "request": "launch",
-            "vmArgs": "--module-path C:\\JavaFX\\javafx-sdk-15.0.1\\lib --add-modules javafx.controls,javafx.fxml",
+            "vmArgs": "--module-path C:\\JavaFX\\javafx-sdk-15.0.1\\lib --add-modules javafx.controls,javafx.fxml,javafx.web",
             "mainClass": "application.Main",
             "projectName": "newsManager20-21Students_342925aa"
         }

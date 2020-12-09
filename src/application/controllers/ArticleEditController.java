@@ -45,7 +45,25 @@ public class ArticleEditController {
     private ConnectionManager connection;
 	private ArticleEditModel editingArticle;
 	private User usr;
-	//TODO add attributes and methods as needed
+
+	private NewsReaderController newsReaderController;
+	private Pane root;
+
+	public ArticleEditController(NewsReaderController newsReaderController) {
+		this.newsReaderController = newsReaderController;
+
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.EDITOR.getFxmlFile()));
+			loader.setController(this);
+			root = loader.load();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public Pane getContent() {
+		return root;
+	}
 
 	@FXML
 	void onImageClicked(MouseEvent event) {
@@ -58,7 +76,7 @@ public class ArticleEditController {
 				Pane root = loader.load();
 				// Scene scene = new Scene(root, 570, 420);
 				Scene scene = new Scene(root);
-				scene.getStylesheets().add(getClass().getResource("../application.css").toExternalForm());
+				scene.getStylesheets().add(getClass().getResource("../css/application.css").toExternalForm());
 				Window parentStage = parentScene.getWindow();
 				Stage stage = new Stage();
 
@@ -73,7 +91,7 @@ public class ArticleEditController {
 				
 				if (image != null) {
 					editingArticle.setImage(image);
-					//TODO Update image on UI
+					// TODO Update image on UI
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -86,7 +104,7 @@ public class ArticleEditController {
 	 * Title and category must be defined and category must be different to ALL
 	 * @return true if the article has been saved
 	 */
-	private boolean send() {
+	public boolean send() {
 		String titleText = null; // TODO Get article title
 		Categories category = null; //TODO Get article cateory
 
