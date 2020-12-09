@@ -54,7 +54,7 @@ The extra exercise consists in define and use a login form. In this case, studen
     - Filter headlines that will be listed 
     - Only headlines with the selected category will be listed
     - If category is equal to "ALL", all headlines will be listed
-- [ ] Read more:
+- [x] Read more:
     - Allows user to acces the selected article details
     
 [Main window structure](resources/images/git/main-window.PNG)
