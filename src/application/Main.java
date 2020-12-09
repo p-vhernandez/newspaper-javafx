@@ -1,29 +1,17 @@
 package application;
 
-import java.io.IOException;
-import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import application.controllers.NewsReaderController;
-
-//import org.omg.CORBA.portable.InputStream;
-
-import application.news.Article;
-import application.news.Categories;
 import application.news.User;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import serverConection.ConnectionManager;
 import serverConection.exceptions.AuthenticationError;
-import serverConection.exceptions.ServerCommunicationError;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.fxml.FXMLLoader;
 
 public class Main extends Application {
 
@@ -33,8 +21,9 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {		
 		newsReaderController = new NewsReaderController();
+		newsReaderController.setMainController(this);
 		Pane root = newsReaderController.getContent();
-		// setConnection();
+		setConnection();
 
 		Scene scene = new Scene(root);
 		scene.getStylesheets().add(getClass().getResource("css/application.css").toExternalForm());
@@ -52,8 +41,8 @@ public class Main extends Application {
 			connection = new ConnectionManager(prop);
 
 			// Connecting as public (anonymous) for your group
-			connection.setAnonymousAPIKey("DEV_TEAM_3553");
-			defaultLogin();
+			connection.setAnonymousAPIKey("");
+			// defaultLogin();
 			newsReaderController.setConnectionManager(connection);	
 		} catch(AuthenticationError e) {
 			Logger.getGlobal().log(Level.SEVERE, "Error in loging process");
@@ -63,9 +52,11 @@ public class Main extends Application {
 
 	public void defaultLogin() {
 		try {
+			// Set the API Key to retrieve the group's articles
+			connection.setAnonymousAPIKey("DEV_TEAM_3553");
 			// Login without login form:
-			connection.login("Reader2", "reader2");
-			User user = new User("Reader2", Integer.parseInt(connection.getIdUser()));
+			connection.login("us_3_3", "3553");
+			User user = new User("us_3_3", Integer.parseInt(connection.getIdUser()));
 			newsReaderController.setUsr(user);
 		} catch (AuthenticationError e) {
 			e.printStackTrace();

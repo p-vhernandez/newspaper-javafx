@@ -3,59 +3,33 @@
  */
 package application.controllers;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Observable;
 import java.util.function.Predicate;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import application.AppScenes;
+import application.Main;
 import application.models.NewsReaderModel;
 import application.news.Article;
 import application.news.Categories;
 import application.news.User;
-import application.utils.JsonArticle;
-import application.utils.exceptions.ErrorMalFormedArticle;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import javafx.stage.FileChooser;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.stage.Window;
-import javafx.stage.FileChooser.ExtensionFilter;
 import serverConection.ConnectionManager;
 
 /**
@@ -101,6 +75,7 @@ public class NewsReaderController {
 	private Pane root;
 	private Article selectedArticle;
 
+	private Main main;
 	private NewsReaderModel newsReaderModel = new NewsReaderModel();
 
 	public NewsReaderController() {
@@ -119,6 +94,10 @@ public class NewsReaderController {
 		return root;
 	}
 
+	/**
+	 * This method is called after the 
+	 * screen (FXML file) has been loaded.
+	 */
 	@FXML
 	void initialize() {
 		getData();
@@ -164,6 +143,7 @@ public class NewsReaderController {
 	}
 
 	/**
+	 * Display a new screen with the article's details.
 	 * 
 	 * @param event
 	 */
@@ -180,15 +160,31 @@ public class NewsReaderController {
 		}
 	}
 
+	/**
+	 * Method: Login
+	 * Can be done automatically (just one user)
+	 * or displaying a new for to allow more than one
+	 * user to enter with their credentials.
+	 * 
+	 * @param event
+	 */
 	@FXML
 	private void btnLoginClicked(ActionEvent event) {
 		try {
-			LoginController loginController = new LoginController(this);
+			// LoginController loginController = new LoginController(this);
 
-			Button eventOrigin = (Button) event.getSource();
-			eventOrigin.getScene().setRoot(loginController.getContent());
+			// Button eventOrigin = (Button) event.getSource();
+			// eventOrigin.getScene().setRoot(loginController.getContent());
+
+			autoLogin();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	private void autoLogin() {
+		if (main != null) {
+			main.defaultLogin();
 		}
 	}
 
@@ -217,22 +213,38 @@ public class NewsReaderController {
 		} else {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Want to edit an article?");
-			alert.setContentText("An article must be selected in order to edit it.");
+			alert.setHeaderText(null);
+			alert.setContentText("An article from the list must be selected in order to edit it.");
 			alert.showAndWait();
 		}
 	}
 
 	@FXML
 	private void btnDeleteArticleClicked() {
-		System.out.println("DELETE ARTICLE CLICKED");
-		// TODO: deletion functionality
+		if (selectedArticle != null) {
+			// TODO: deletion functionality
+		} else {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Want to delete an article?");
+			alert.setHeaderText(null);
+			alert.setContentText("An article from the list must be selected in order to delete it.");
+			alert.showAndWait();
+		}
 	}
 
+	/**
+	 * Function that closes the applciation.
+	 * @param event
+	 */
 	@FXML
-	private void btnExitClicked() {
-		System.out.println("EXIT CLICKED");
+	private void btnExitClicked(ActionEvent event) {
+		Platform.exit();
 	}
 
+	/**
+	 * Show the selected article's data
+	 * on the screen. 
+	 */
 	private void showArticleData() {
 		if (selectedArticle != null) {
 			if (selectedArticle.getImageData() != null) {
@@ -245,7 +257,7 @@ public class NewsReaderController {
 	}
 
 	public void setConnectionManager (ConnectionManager connection){
-		this.newsReaderModel.setDummyData(false); //System is connected so dummy data are not needed
+		this.newsReaderModel.setDummyData(false); // System is connected so dummy data are not needed
 		this.newsReaderModel.setConnectionManager(connection);
 		this.getData();
 	}
@@ -269,10 +281,6 @@ public class NewsReaderController {
 	private void enableReadMore() {
 		btnReadMore.setDisable(false);
 	}
-
-	private void disableReadMore() {
-		btnReadMore.setDisable(true);
-	}
 	
 	/**
 	 * @param usr the usr to set
@@ -290,6 +298,15 @@ public class NewsReaderController {
 	 */
 	public User getUsr() {
 		return usr;
+	}
+
+	/**
+	 * Sets the main controller in order to
+	 * perform the actions needed.
+	 * @param main
+	 */
+	public void setMainController(Main main) {
+		this.main = main;
 	}
 
 }
