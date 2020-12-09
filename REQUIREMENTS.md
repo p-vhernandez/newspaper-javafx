@@ -41,7 +41,7 @@ The extra exercise consists in define and use a login form. In this case, studen
 - [ ] Delete:
     - Login is required
     - Only articles belonging to the user can be deleted
-- [ ] Exit
+- [x] Exit
 - [ ] Headlines list:
     - Shows a list of headlines
     - When user selects a headline:
@@ -54,16 +54,16 @@ The extra exercise consists in define and use a login form. In this case, studen
     - Filter headlines that will be listed 
     - Only headlines with the selected category will be listed
     - If category is equal to "ALL", all headlines will be listed
-- [ ] Read more:
+- [x] Read more:
     - Allows user to acces the selected article details
     
 [Main window structure](resources/images/git/main-window.PNG)
 
 **Form for article details**
-- [ ] Always display article details
-- [ ] At the beginning, this form shows the article body
-- [ ] Switch between body and abstract
-- [ ] Back to the previous form
+- [x] Always display article details
+- [x] At the beginning, this form shows the article body
+- [x] Switch between body and abstract
+- [x] Back to the previous form
 
 [Article details window structure](resources/images/git/article-details.PNG)
 
