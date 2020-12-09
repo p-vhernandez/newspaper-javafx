@@ -60,10 +60,10 @@ The extra exercise consists in define and use a login form. In this case, studen
 [Main window structure](resources/images/git/main-window.PNG)
 
 **Form for article details**
-- [ ] Always display article details
-- [ ] At the beginning, this form shows the article body
-- [ ] Switch between body and abstract
-- [ ] Back to the previous form
+- [x] Always display article details
+- [x] At the beginning, this form shows the article body
+- [x] Switch between body and abstract
+- [x] Back to the previous form
 
 [Article details window structure](resources/images/git/article-details.PNG)
 
