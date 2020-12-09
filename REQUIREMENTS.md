@@ -88,3 +88,5 @@ This screen provides services for:
     - This command discards all changes made since last "save to file" command
     
 [Edit & create window structure](resources/images/git/edit-and-create-news.PNG)
+
+[ ] Review time delay when retrieving articles in the main screen.
