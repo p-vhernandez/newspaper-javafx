@@ -41,7 +41,7 @@ The extra exercise consists in define and use a login form. In this case, studen
 - [ ] Delete:
     - Login is required
     - Only articles belonging to the user can be deleted
-- [ ] Exit
+- [x] Exit
 - [ ] Headlines list:
     - Shows a list of headlines
     - When user selects a headline:
