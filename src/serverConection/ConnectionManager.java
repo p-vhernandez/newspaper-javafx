@@ -266,7 +266,7 @@ public class ConnectionManager {
 	 */
 	private JsonObject getFullArticle(String idArticle) {
 		String parameters =  "";
-		String request = serviceUrl + "article/"+idArticle;
+		String request = serviceUrl + "article/" + idArticle;
 		HttpURLConnection connection =  this.getHttpURLConection(
 			request, 
 			parameters,
