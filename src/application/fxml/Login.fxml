@@ -3,6 +3,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane fx:id="loginWindow" prefHeight="294.0" prefWidth="404.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="logInWindow" prefHeight="294.0" prefWidth="404.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    
 </AnchorPane>
