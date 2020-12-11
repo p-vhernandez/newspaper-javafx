@@ -34,8 +34,8 @@ The extra exercise consists in define and use a login form. In this case, studen
     - Allows to create a new article
     - Only logged users can send articles to server
     - Users can save article to a file (login is not required)
-- [ ] Load an article from a file
-- [ ] Edit:
+- [x] Load an article from a file
+- [x] Edit:
     - Login is required
     - Only articles belonging to the user can be edited
 - [x] Delete:
