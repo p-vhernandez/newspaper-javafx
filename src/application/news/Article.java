@@ -23,6 +23,7 @@ import javafx.scene.image.Image;
  */
 
 public class Article {
+
 	//Binding attributes: getters and setters methods are providing in order to hiding the use of properties
 	private BooleanProperty isDeleted;
 	private StringProperty  abstractText;
@@ -33,13 +34,19 @@ public class Article {
 	
 	//Author id User
 	private int idUser;
+	
 	//Article Image
 	private Image imageData;
+
+	//Article Thumbnail
+	private Image thumbnailData;
+
 	//IDs. These ids are needed for storing the information in the server
 	private int idArticle = 0; //0 -> New Article so don't exists in the BD
 	private int idImage = 0; //0 -> New Image so don't exists in the BD
 	
 	private String  category = Categories.ALL.name();
+
 	//if needBeSaved is true the article was modified by a set method or by a property 
 	private boolean needBeSaved = false;
 
@@ -76,7 +83,7 @@ public class Article {
 	}
 	
 	public Article(String title, int idUser, String category, String abstractText) {
-		this( title, idUser, category);
+		this(title, idUser, category);
 		this.abstractText.setValue(abstractText);
 	}
 	
@@ -165,11 +172,18 @@ public class Article {
 	}
 	
 	/**
-	 * 
 	 * @return the image data
 	 */
 	public Image getImageData() {
 		return this.imageData;
+	}
+
+	/**
+	 * 
+	 * @return the thumbnail data
+	 */
+	public Image getThumbnailData() {
+		return this.thumbnailData;
 	}
 	
 	/**
@@ -238,6 +252,7 @@ public class Article {
 	public void setDeleted(boolean deleted) {
 	 isDeleted.setValue(deleted);	
 	}
+	
 	/**
 	 * @param idArticle the idArticle to set
 	 */
@@ -265,6 +280,15 @@ public class Article {
 	 */
 	public void setImageData(BufferedImage data) {
 		this.imageData = SwingFXUtils.toFXImage(data, null);
+		this.setNeedBeSaved(true);
+	}
+
+	/**
+	 * Set the thumbnail data
+	 * @param data data for the image
+	 */
+	public void setThumbnailData(BufferedImage data) {
+		this.thumbnailData = SwingFXUtils.toFXImage(data, null);
 		this.setNeedBeSaved(true);
 	}
 	

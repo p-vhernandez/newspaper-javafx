@@ -34,22 +34,22 @@ The extra exercise consists in define and use a login form. In this case, studen
     - Allows to create a new article
     - Only logged users can send articles to server
     - Users can save article to a file (login is not required)
-- [ ] Load an article from a file
-- [ ] Edit:
+- [x] Load an article from a file
+- [x] Edit:
     - Login is required
     - Only articles belonging to the user can be edited
-- [ ] Delete:
+- [x] Delete:
     - Login is required
     - Only articles belonging to the user can be deleted
 - [x] Exit
-- [ ] Headlines list:
+- [x] Headlines list:
     - Shows a list of headlines
     - When user selects a headline:
         - [x] Command "read more" will be enabled
         - [x] Article image will be shown
         - [x] Abstract will be shown
-        - [ ] If the article belongs to the user, "edit" will be enabled
-        - [ ] If the article belongs to the user, "delete" will be enabled
+        - [x] If the article belongs to the user, "edit" will be enabled
+        - [x] If the article belongs to the user, "delete" will be enabled
 - [x] Category filter:
     - Filter headlines that will be listed 
     - Only headlines with the selected category will be listed

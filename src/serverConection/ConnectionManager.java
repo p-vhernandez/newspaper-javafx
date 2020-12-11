@@ -56,22 +56,24 @@ public class ConnectionManager {
 	public static final String ATTR_PROXY_PASS = "";
 	public static final String ATTR_APACHE_AUTH_USER = "";
 	public static final String ATTR_APACHE_AUTH_PASS = "";
+	public static final String ATTR_FORMAT = "application/x-www-form-urlencoded; charset=UTF-8";
 
 	/**
 	 * 
 	 * @param ini Initializes entity manager urls and users
 	 * @throws AuthenticationError
 	 */
-	public ConnectionManager(Properties ini) throws AuthenticationError{
-		if (!ini.containsKey(ATTR_SERVICE_URL)){
+	public ConnectionManager(Properties ini) throws AuthenticationError {
+		if (!ini.containsKey(ATTR_SERVICE_URL)) {
 			throw new IllegalArgumentException("Required attribute '"+ ATTR_SERVICE_URL+"' not found!");
 		}
 
 		// disable auth from self signed certificates
-		requireSelfSigned =  (ini.containsKey(ATTR_REQUIRE_SELF_CERT) && ((String)ini.get(ATTR_REQUIRE_SELF_CERT)).equalsIgnoreCase("TRUE"));
+		requireSelfSigned =  (ini.containsKey(ATTR_REQUIRE_SELF_CERT) 
+								&& ((String)ini.get(ATTR_REQUIRE_SELF_CERT)).equalsIgnoreCase("TRUE"));
 
 		// add proxy http/https to the system
-		if (ini.contains(ATTR_PROXY_HOST) && ini.contains(ATTR_PROXY_PORT)){
+		if (ini.contains(ATTR_PROXY_HOST) && ini.contains(ATTR_PROXY_PORT)) {
 			String proxyHost = (String)ini.get(ATTR_PROXY_HOST);
 			String proxyPort = (String)ini.get(ATTR_PROXY_PORT);
 
@@ -100,7 +102,6 @@ public class ConnectionManager {
 		}
 
 		serviceUrl = ini.getProperty(ATTR_SERVICE_URL);
-
 	}
 
 	/**
@@ -109,58 +110,61 @@ public class ConnectionManager {
 	 * @param password the password for the user
 	 * @throws AuthenticationError
 	 */
-	public void login(String username, String password) throws AuthenticationError{
-		try{
+	public void login(String username, String password) throws AuthenticationError {
+		try {
 			String parameters =  "";
 			String request = serviceUrl + "login";
+
 			setLoggedOK(false); 
+
 			HttpURLConnection connection;
-			connection = prepareHttpURLConection(request, parameters, 
-					"POST", "application/json; charset=UTF-8");      
+			connection = prepareHttpURLConection(
+				request, 
+				parameters, 
+				"POST", 
+				"application/json; charset=UTF-8"
+			);      
 
 			JsonObjectBuilder jsonParam =  Json.createObjectBuilder();
 
-			jsonParam.add("username", username);
+			jsonParam.add(ATTR_LOGIN_USER, username);
 			jsonParam.add("passwd", password);
+
 			OutputStream os = connection.getOutputStream();
 			JsonWriter jsonWriter = Json.createWriter(os);
 			jsonWriter.writeObject(jsonParam.build());			
 			os.close();
+
 			int HttpResult =connection.getResponseCode();  
-			if(HttpResult == HttpURLConnection.HTTP_OK){ 
-				try (InputStream is = connection.getInputStream();
-						JsonReader rdr = Json.createReader(is)){//try
+			if (HttpResult == HttpURLConnection.HTTP_OK) { 
+				try (InputStream is = connection.getInputStream(); JsonReader rdr = Json.createReader(is)) {
 					JsonObject jsonObj = rdr.readObject();
 					System.out.println("Leido en login: "+ jsonObj.toString());
-					idUser = jsonObj.getString("user","");
-					authType = jsonObj.getString("Authorization","");
-					apikey =   jsonObj.getString("apikey","");		
+
+					idUser = jsonObj.getString("user", "");
+					authType = jsonObj.getString("Authorization", "");
+					apikey =   jsonObj.getString("apikey", "");		
 					isAdministrator = jsonObj.containsKey("administrator");
-					setLoggedOK(true); //user was logged;
-				}//try
-			}else{  
-				Logger.getGlobal().log(Level.SEVERE,connection.getResponseMessage()); 
+
+					setLoggedOK(true);
+				} 
+			} else {  
+				Logger.getGlobal().log(Level.SEVERE, connection.getResponseMessage()); 
 				throw new AuthenticationError(connection.getResponseMessage());
 			}  
 		} catch (MalformedURLException e) {  
-			//e.printStackTrace();  
+			e.printStackTrace();  
 			throw new AuthenticationError(e.getMessage());
-		}  
-		catch (IOException e) {  
-			//e.printStackTrace();  
+		} catch (IOException e) {  
+			e.printStackTrace();  
 			throw new AuthenticationError(e.getMessage());
-		} 
-		catch (Exception e) {  
-			//e.printStackTrace();  
+		} catch (Exception e) {  
+			e.printStackTrace();  
 			throw new AuthenticationError(e.getMessage());
-		} 
-
+		}
 	}
 
-	/****************************/
-
 	/**
-	 * 
 	 * @return user id logged in
 	 */
 	public String getIdUser(){
@@ -168,16 +172,13 @@ public class ConnectionManager {
 	}
 
 	/**
-	 * 
 	 * @return true if user logged is an administrator
 	 */
 	public boolean isAdministrator(){
 		return isAdministrator;
 	}
 
-
 	/**
-	 * 
 	 * @return auth token header for user logged in
 	 */
 	private  String getAuthTokenHeader(){
@@ -204,6 +205,7 @@ public class ConnectionManager {
 			this.apikey = key;
 		}
 	}
+
 	/**
 	 * @param loggedOK the loggedOK to set
 	 */
@@ -217,43 +219,64 @@ public class ConnectionManager {
 	 * @throws ServerCommunicationError
 	 * @throws IOException 
 	 */
-	public List<Article> getArticles() throws ServerCommunicationError, IOException{
-		List<Article> result = new ArrayList<Article>();
+	public List<Article> getArticles() throws ServerCommunicationError, IOException {
+		List<Article> result = new ArrayList<>();
 		String parameters =  "";
 		String request = serviceUrl + "articles"; 
-		HttpURLConnection connection =  this.getHttpURLConection(request, parameters,
-				"GET", "application/x-www-form-urlencoded; charset=UTF-8"); 
-		if(connection!=null){//IF OK
-			try (InputStream is = connection.getInputStream();
-					JsonReader rdr = Json.createReader(is)) {//try 2
-				JsonArray arryObj = rdr.readArray();
-				System.out.println("Leido: "+arryObj.size());
-				for (int i = 0; i< arryObj.size(); i++) {//for
-					JsonObject obj = arryObj.getJsonObject(i);
-					//System.out.println("element read ("+i+"): "+obj.toString());	
-					try {
-						Article article;
-						obj = getFullArticle(obj.getString("id"));
-						if (obj != null) {
-					
-							article = JsonArticle.jsonToArticle(obj);
-							result.add(article);	
-						}
-						
-					} catch (ErrorMalFormedArticle e) {
-						// TODO Auto-generated catch block
-						Logger.getGlobal().log(Level.SEVERE, e.getMessage());
-					}
-				}//for
+		HttpURLConnection connection =  this.getHttpURLConection(
+			request, 
+			parameters,
+			"GET",
+			ATTR_FORMAT
+		); 
 
-			}//Try 2
-			catch (IOException e) {
-				// TODO Auto-generated catch block
+		if (connection != null) {
+			try (InputStream is = connection.getInputStream(); JsonReader rdr = Json.createReader(is)) {
+				JsonArray arryObj = rdr.readArray();
+				System.out.println("Leido: " + arryObj.size());
+
+				for (int i = 0; i < arryObj.size(); i++) {
+					JsonObject obj = arryObj.getJsonObject(i);
+					Article article = getFullArticle(obj);
+
+					if (article != null) {
+						result.add(article);
+					}
+
+					// System.err.println(JsonArticle.jsonToArticle(obj).getThumbnailData());
+					// result.add(JsonArticle.jsonToArticle(obj));
+				}
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}//IF OK
+		}
 	  
 		return result;
+	}
+
+	/**
+	 * Generate the article from a 
+	 * json retrieved from the server call
+	 * 
+	 * @param obj json article
+	 * @return final article
+	 */
+	private Article getFullArticle(JsonObject obj) {
+		try {
+			Article article;
+			obj = downloadFullArticle(obj.getString("id"));
+
+			if (obj != null) {
+				article = JsonArticle.jsonToArticle(obj);
+				return article;
+			} else {
+				return null;
+			}
+		} catch (ErrorMalFormedArticle e) {
+			e.printStackTrace();
+			Logger.getGlobal().log(Level.SEVERE, e.getMessage());
+			return null;
+		}
 	}
 
 	/**
@@ -261,22 +284,25 @@ public class ConnectionManager {
 	 * @param idArticle the id for article to retrieve
 	 * @return a jsonObject with the article data
 	 */
-	private JsonObject getFullArticle(String idArticle) {
+	private JsonObject downloadFullArticle(String idArticle) {
 		String parameters =  "";
-		String request = serviceUrl + "article/"+idArticle;
-		HttpURLConnection connection =  this.getHttpURLConection(request, parameters,
-				"GET", "application/x-www-form-urlencoded; charset=UTF-8"); 
-		if(connection!=null){//IF OK
-			try (InputStream is = connection.getInputStream();
-					JsonReader rdr = Json.createReader(is)) {//try 2
-				JsonObject fullArticle = rdr.readObject();
-				return fullArticle;
-				
+		String request = serviceUrl + "article/" + idArticle;
+		HttpURLConnection connection =  this.getHttpURLConection(
+			request, 
+			parameters,
+			"GET", 
+			ATTR_FORMAT
+		); 
+
+		if (connection != null) {
+			try (InputStream is = connection.getInputStream(); JsonReader rdr = Json.createReader(is)) {
+				return rdr.readObject();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				e.printStackTrace();
 				Logger.getGlobal().log(Level.SEVERE, e.getMessage());
 			}
-		}//IF
+		}
+
 		return null;
 	}
 
@@ -287,37 +313,45 @@ public class ConnectionManager {
 	 * @throws ServerCommunicationError
 	 */
 	public int saveArticle(Article article) throws ServerCommunicationError{
-		try{
+		try {
 			String parameters =  "";
 			String request = serviceUrl + "article";
+			HttpURLConnection connection = prepareHttpURLConection(
+				request, 
+				parameters, 
+				"POST", 
+				"application/json; charset=UTF-8"
+			);
 
-			HttpURLConnection connection;
-			connection = prepareHttpURLConection(request, parameters, 
-					"POST", "application/json; charset=UTF-8");
 			OutputStream os = connection.getOutputStream();
 			JsonWriter jsonWriter = Json.createWriter(os);
 			JsonObject obj = JsonArticle.articleToJson(article);
 			jsonWriter.writeObject(obj);			
 			os.close();
-			int HttpResult =connection.getResponseCode();
-			if(HttpResult ==HttpURLConnection.HTTP_OK){
+
+			int HttpResult = connection.getResponseCode();
+			if (HttpResult == HttpURLConnection.HTTP_OK) {
 				int idArticle = 0;
+
 				// get id from status ok when saved
-				try (InputStream is = connection.getInputStream();
-						JsonReader rdr = Json.createReader(is)){//try
+				try (InputStream is = connection.getInputStream(); JsonReader rdr = Json.createReader(is)) {
 					JsonObject jsonObj = rdr.readObject();
 					String id = jsonObj.getString("id", "0");
 					idArticle = Integer.parseInt(id);
 				}
 				
-				 
 				Logger.getGlobal().log(Level.INFO, "Object inserted, returned id:" + idArticle);
+
 				return idArticle;
-			}else{  
+			} else {  
 				throw new ServerCommunicationError(connection.getResponseMessage());
 			}  
 		} catch (Exception e) {  
-			Logger.getGlobal().log(Level.SEVERE,"Inserting article ["+article.getTitle()+"] : " + e.getClass() + " ( "+e.getMessage() + ")");
+			Logger.getGlobal().log(
+				Level.SEVERE,
+				"Inserting article [" + article.getTitle() + "] : " + e.getClass() + " ( "+e.getMessage() + ")"
+			);
+
 			throw new ServerCommunicationError(e.getClass() + " ( "+e.getMessage() + ")");
 		}
 	}
@@ -328,26 +362,30 @@ public class ConnectionManager {
 	 * @throws ServerCommunicationError
 	 */
 	public void deleteArticle(int idArticle) throws ServerCommunicationError{
-		try{
+		try {
 			String parameters =  "";
 			String request = serviceUrl + "article/" + idArticle;
-			HttpURLConnection connection;
-			connection = this.getHttpURLConection(request, parameters, 
-					"DELETE", "application/x-www-form-urlencoded; charset=UTF-8");
+			HttpURLConnection connection = this.getHttpURLConection(
+				request, 
+				parameters, 
+				"DELETE", 
+				ATTR_FORMAT
+			);
+
 			if (connection != null) {
-				Logger.getGlobal().log (Level.INFO,"Article (id:"+idArticle+") deleted");
+				Logger.getGlobal().log (Level.INFO, "Article (id:" + idArticle + ") deleted");
 			}
 		} catch (Exception e) {  
-			Logger.getGlobal().log(Level.SEVERE, "Deleting article (id:"+idArticle+") : " + e.getClass() + " ( "+e.getMessage() + ")");
+			Logger.getGlobal().log(
+				Level.SEVERE, 
+				"Deleting article (id:" + idArticle + ") : " + e.getClass() + " ( "+e.getMessage() + ")"
+			);
+
 			throw new ServerCommunicationError(e.getClass() + " ( "+e.getMessage() + ")");
 		}  
 	}
 
-	
-
-
-
-	//Auxiliary services
+	// Auxiliary services
 	private HttpURLConnection getHttpURLConection (String request, String parameters,
 			String requestMethd, String contentType) {
 		HttpURLConnection connection = null;
@@ -355,42 +393,43 @@ public class ConnectionManager {
 		try {
 			connection = prepareHttpURLConection(request, parameters, requestMethd, contentType);
 			int HttpResult =connection.getResponseCode();  
-			if(HttpResult !=HttpURLConnection.HTTP_OK 
-					&& HttpResult !=HttpURLConnection.HTTP_NO_CONTENT ){//IF OK
+
+			if (HttpResult != HttpURLConnection.HTTP_OK 
+					&& HttpResult !=HttpURLConnection.HTTP_NO_CONTENT ) {
 				connection = null; //It was impossible establish a connection
 			}
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			connection = null;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			connection = null;
 		} catch (KeyManagementException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			connection = null;
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			connection = null;
 		} catch (KeyStoreException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			connection = null;
 		} 
 		return connection;
 	}
 	
-	private HttpURLConnection prepareHttpURLConection (String request, String parameters,
-			String requestMethd, String contentType) throws IOException, KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
+	private HttpURLConnection prepareHttpURLConection (String request, String parameters, String requestMethd, String contentType) 
+			throws IOException, KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
+
 		HttpURLConnection connection = null;
 		URL url;
+
 		url = new URL(request);
-		connection = (HttpURLConnection) url.openConnection();      
-		if(requireSelfSigned)
+		connection = (HttpURLConnection) url.openConnection();  
+
+		if (requireSelfSigned) {
 			TrustModifier.relaxHostChecking(connection); 
+		}
+
 		connection.setDoOutput(true);
 		connection.setDoInput(true);
 		connection.setInstanceFollowRedirects(false); 
@@ -400,6 +439,7 @@ public class ConnectionManager {
 		connection.setRequestProperty("charset", "utf-8");
 		connection.setRequestProperty("Content-Length", "" + Integer.toString(parameters.getBytes().length));
 		connection.setUseCaches (false);
+
 		return connection;
 	}
 }

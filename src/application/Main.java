@@ -31,7 +31,6 @@ public class Main extends Application {
 		primaryStage.initStyle(StageStyle.DECORATED);
 		primaryStage.setScene(scene);
 		primaryStage.show();
-		
 	}
 
 	private void setConnection() {
@@ -42,7 +41,7 @@ public class Main extends Application {
 
 			// Connecting as public (anonymous) for your group
 			connection.setAnonymousAPIKey("");
-			// defaultLogin();
+			defaultLogin();
 			newsReaderController.setConnectionManager(connection);	
 		} catch(AuthenticationError e) {
 			Logger.getGlobal().log(Level.SEVERE, "Error in loging process");

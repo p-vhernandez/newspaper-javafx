@@ -29,7 +29,8 @@ public class ImagePickerController {
     void onAccept(ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         
-    	if (idImageURL.getText()!=null && !idImageURL.getText().equals("")) {
+        if (idImageURL.getText() != null 
+            && !idImageURL.getText().equals("")) {
     		image = new Image(idImageURL.getText(), false);
         }
     		
@@ -57,7 +58,7 @@ public class ImagePickerController {
         Window parentStage = ((Node) event.getSource()).getScene().getWindow();
     	File selectedFile = fileChooser.showOpenDialog(parentStage);
          
-        //Getting the URI for the local file
+        // Getting the URI for the local file
         if (selectedFile != null) {
             Path path = FileSystems.getDefault().getPath(
                 selectedFile.getAbsolutePath()
