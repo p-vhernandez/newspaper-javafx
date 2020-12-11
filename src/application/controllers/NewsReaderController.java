@@ -207,7 +207,7 @@ public class NewsReaderController {
 
 		JsonObject jsonArticle = null;
 		if (file != null) {
-			jsonArticle = JsonArticle.readFile(file.getName());
+			jsonArticle = JsonArticle.readFile(file.getPath());
 		} else {
 			// TODO: show error
 		}
