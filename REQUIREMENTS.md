@@ -35,13 +35,13 @@ The extra exercise consists in define and use a login form. In this case, studen
     - Only logged users can send articles to server
     - Users can save article to a file (login is not required)
 - [ ] Load an article from a file
-- [x] Edit:
+- [ ] Edit:
     - Login is required
     - Only articles belonging to the user can be edited
 - [x] Delete:
     - Login is required
     - Only articles belonging to the user can be deleted
-- [ ] Exit
+- [x] Exit
 - [ ] Headlines list:
     - Shows a list of headlines
     - When user selects a headline:
