@@ -58,6 +58,10 @@ public class ArticleEditModel {
 			return edited.abstractTextProperty();
 	}
 
+	public void setAbstractText(String abstractString) {
+		edited.setAbstractText(abstractString);
+	}
+
 	/**
 	 *  This method adds a change listener to all article
 	 *  properties in order to know whenever
@@ -87,6 +91,10 @@ public class ArticleEditModel {
 	 */
 	public StringProperty bodyTextProperty() {
 		return edited.bodyTextProperty();
+	}
+
+	public void setBodyText(String body) {
+		edited.setBodyText(body);
 	}
 	
 	/**

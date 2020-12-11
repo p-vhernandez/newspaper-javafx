@@ -116,6 +116,14 @@ public class NewsReaderController {
 		selectorCategory.getSelectionModel().select(Categories.ALL);
 	}
 
+	public void clearArticleSelection() {
+		listArticles.getSelectionModel().clearSelection();
+		
+		articleImage.setImage(null);
+		WebEngine engine = articleAbstract.getEngine();
+		engine.loadContent("");
+	}
+
 	/**
 	 * Set the listeners to show changes in the screen when an element is clicked
 	 */

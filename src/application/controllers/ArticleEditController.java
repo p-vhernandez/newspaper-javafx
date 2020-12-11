@@ -120,6 +120,16 @@ public class ArticleEditController {
 
 		txtTitle.setEditable(false);
 		txtTitle.setFocusTraversable(false);
+		
+		setListeners();
+	}
+
+	private void setListeners() {
+		txtSubtitle.textProperty().addListener((observable, oldValue, newValue) -> 
+			editingArticle.setSubtitle(newValue));
+
+		categorySelector.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> 
+			editingArticle.setCategory(newValue));
 	}
 
 	private void showArticleDetails() {
@@ -190,11 +200,18 @@ public class ArticleEditController {
 
 	@FXML
 	private void btnSendClicked(ActionEvent event) {
+		getArticleNewData();
 		editingArticle.commit();
+		
 		if (send()) {
+			newsReaderController.clearArticleSelection();
 			btnBackClicked(event);
 		} else {
-			// TODO: showError
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("An error ocurred");
+			alert.setHeaderText(null);
+			alert.setContentText("The articule could not be edited.");
+			alert.showAndWait();
 		}
 	}
 
@@ -222,6 +239,11 @@ public class ArticleEditController {
 	private void changeBtnChangeText(String text) {
 		btnChange.setText(text);
 	}
+
+	private void getArticleNewData() {
+		editingArticle.setAbstractText(abstractEditor.getHtmlText());
+		editingArticle.setBodyText(bodyEditor.getHtmlText());
+	}
 	
 	/**
 	 * Send and article to server,
@@ -240,7 +262,12 @@ public class ArticleEditController {
 			return false;
 		}
 
-		//TODO: prepare and send using connection.saveArticle( ...)
+		try {
+			connection.saveArticle(editingArticle.getArticleOriginal());
+		} catch (ServerCommunicationError e) {
+			e.printStackTrace();
+			return false;
+		}
 		
 		return true;
 	}
@@ -299,7 +326,7 @@ public class ArticleEditController {
 	 * Article must have a title
 	 */
 	private void write() {
-		// TODO: Consolidate all changes	
+		getArticleNewData();	
 		this.editingArticle.commit();
 
 		// Removes special characters not allowed for filenames
