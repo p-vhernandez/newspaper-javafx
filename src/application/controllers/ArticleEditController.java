@@ -336,6 +336,7 @@ public class ArticleEditController {
 		try (FileWriter file = new FileWriter(fileName)) {
 			file.write(data.toString());
 			file.flush();
+			System.out.println("Saved to path:" + fileName);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

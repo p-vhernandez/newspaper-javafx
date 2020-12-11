@@ -3,9 +3,12 @@
  */
 package application.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.function.Predicate;
+
+import javax.json.JsonObject;
 
 import application.AppScenes;
 import application.Main;
@@ -13,6 +16,8 @@ import application.models.NewsReaderModel;
 import application.news.Article;
 import application.news.Categories;
 import application.news.User;
+import application.utils.JsonArticle;
+import application.utils.exceptions.ErrorMalFormedArticle;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -31,6 +36,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import serverConection.ConnectionManager;
 import serverConection.exceptions.ServerCommunicationError;
 
@@ -190,8 +197,41 @@ public class NewsReaderController {
 	}
 
 	@FXML
-	private void btnLoadArticleClicked() {
-		// TODO: add functionality
+	private void btnLoadArticleClicked(ActionEvent event) {
+		FileChooser fileChooser = new FileChooser();
+		FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("NEWS files (*.news)", "*.news");
+		fileChooser.getExtensionFilters().add(extensionFilter);
+
+		Stage stage = (Stage) root.getScene().getWindow();
+		File file = fileChooser.showOpenDialog(stage);
+
+		JsonObject jsonArticle = null;
+		if (file != null) {
+			jsonArticle = JsonArticle.readFile(file.getName());
+		} else {
+			// TODO: show error
+		}
+
+		if (jsonArticle != null) {
+			Article articleToLoad;
+			try {
+				articleToLoad = JsonArticle.jsonToArticle(jsonArticle);
+
+				ArticleEditController editController = new ArticleEditController(this);
+				editController.setArticle(articleToLoad);
+				editController.setUsr(usr);
+				editController.setConnectionMannager(newsReaderModel.getConnectionManager());
+
+				MenuItem eventOrigin = (MenuItem) event.getSource();
+				ContextMenu contextMenu = eventOrigin.getParentPopup();
+				contextMenu.getOwnerWindow().getScene().setRoot(editController.getContent());
+			} catch (Exception e) {
+				// TODO: show error
+				e.printStackTrace();
+			}
+		} else {
+			// TODO: show error
+		}
 	}
 
 	@FXML
