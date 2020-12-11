@@ -38,7 +38,7 @@ The extra exercise consists in define and use a login form. In this case, studen
 - [ ] Edit:
     - Login is required
     - Only articles belonging to the user can be edited
-- [ ] Delete:
+- [x] Delete:
     - Login is required
     - Only articles belonging to the user can be deleted
 - [x] Exit
