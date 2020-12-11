@@ -144,8 +144,10 @@ public class JsonArticle {
 		result.setSubtitle(subtitle);
 		result.setDeleted(isDeleted);
 
-		// Be careful. If key dosen't exists a null pointer exception will be raised
-		String imageData = articleData.getString(keys.get(ARTICLE_IMAGE), null);
+		String imageData = articleData.getString(keys.get(ARTICLE_THUMBNAIL), null);
+		if (imageData == null) {
+			imageData = articleData.getString(keys.get(ARTICLE_IMAGE), null);
+		}
 
 		// Sometimes server return "null" as imageData -> a bug server
 		if (imageData != null && !imageData.equals("null")) {

@@ -76,8 +76,6 @@ public class ArticleDetailsController {
 	}
 
 	private void showArticleDetails() {
-		System.out.println(article.toString());
-
 		if (article != null) {
 			lblTitle.setText(article.getTitle());
 			lblSubtitle.setText(article.getSubtitle());

@@ -68,16 +68,16 @@ public class ArticleEditModel {
 			  (observable, oldvalue, newvalue) -> this.bModified =  true);
 
 		this.edited.bodyTextProperty().addListener(
-				(observable, oldvalue, newvalue) ->this.bModified =  true);
+				(observable, oldvalue, newvalue) -> this.bModified =  true);
 
 		this.edited.isDeletedProperty().addListener(
-				(observable, oldvalue, newvalue) ->this.bModified =  true);
+				(observable, oldvalue, newvalue) -> this.bModified =  true);
 
 		this.edited.titleProperty().addListener(
-				(observable, oldvalue, newvalue) ->this.bModified =  true);
+				(observable, oldvalue, newvalue) -> this.bModified =  true);
 				
 		this.edited.subtitleProperty().addListener(
-				(observable, oldvalue, newvalue) ->this.bModified =  true);
+				(observable, oldvalue, newvalue) -> this.bModified =  true);
 	}
 	
 	/**
@@ -162,22 +162,6 @@ public class ArticleEditModel {
 	}
 	
 	/**
-	 * 
-	 * @return isPublic from the edited article
-	 */
-	/*boolean isPublic() {
-		return edited.isPublish();
-	}*/
-
-	/**
-	 * @return a Property of edited article isPublic.
-	 * The returned value is suitable for binding
-	 */
-	/*public Property<Boolean> isPublicProperty() {
-		return edited.isPublishProperty();
-	}*/
-	
-	/**
 	 * This method give access to the edited article category
 	 * @return category from the edited article
 	 */
@@ -225,6 +209,10 @@ public class ArticleEditModel {
 		this.bModified = true;
 		edited.setCategory(category.toString());
 	}
+
+	public Image getImage() {
+		return edited.getImageData();
+	}
 	
 	/**
 	 * Change the associated image in the edited article
@@ -251,6 +239,15 @@ public class ArticleEditModel {
 	 */
 	public StringProperty subtitleProperty(){
 		return edited.subtitleProperty();
+	}
+
+	/**
+	 * Change the edited article's subtitle
+	 * @param subtitle subtitle String to be saved
+	 */
+	public void setSubtitle(String subtitle) {
+		edited.setSubtitle(subtitle);
+		this.bModified = true;
 	}
 	
 	/**

@@ -237,19 +237,14 @@ public class ConnectionManager {
 
 				for (int i = 0; i < arryObj.size(); i++) {
 					JsonObject obj = arryObj.getJsonObject(i);
+					Article article = getFullArticle(obj);
 
-					try {
-						Article article;
-						obj = getFullArticle(obj.getString("id"));
-
-						if (obj != null) {
-							article = JsonArticle.jsonToArticle(obj);
-							result.add(article);	
-						}
-					} catch (ErrorMalFormedArticle e) {
-						e.printStackTrace();
-						Logger.getGlobal().log(Level.SEVERE, e.getMessage());
+					if (article != null) {
+						result.add(article);
 					}
+
+					// System.err.println(JsonArticle.jsonToArticle(obj).getThumbnailData());
+					// result.add(JsonArticle.jsonToArticle(obj));
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -260,11 +255,36 @@ public class ConnectionManager {
 	}
 
 	/**
+	 * Generate the article from a 
+	 * json retrieved from the server call
+	 * 
+	 * @param obj json article
+	 * @return final article
+	 */
+	private Article getFullArticle(JsonObject obj) {
+		try {
+			Article article;
+			obj = downloadFullArticle(obj.getString("id"));
+
+			if (obj != null) {
+				article = JsonArticle.jsonToArticle(obj);
+				return article;
+			} else {
+				return null;
+			}
+		} catch (ErrorMalFormedArticle e) {
+			e.printStackTrace();
+			Logger.getGlobal().log(Level.SEVERE, e.getMessage());
+			return null;
+		}
+	}
+
+	/**
 	 * This method retrieve the full article 
 	 * @param idArticle the id for article to retrieve
 	 * @return a jsonObject with the article data
 	 */
-	private JsonObject getFullArticle(String idArticle) {
+	private JsonObject downloadFullArticle(String idArticle) {
 		String parameters =  "";
 		String request = serviceUrl + "article/" + idArticle;
 		HttpURLConnection connection =  this.getHttpURLConection(
@@ -365,11 +385,7 @@ public class ConnectionManager {
 		}  
 	}
 
-	
-
-
-
-	//Auxiliary services
+	// Auxiliary services
 	private HttpURLConnection getHttpURLConection (String request, String parameters,
 			String requestMethd, String contentType) {
 		HttpURLConnection connection = null;
@@ -377,42 +393,43 @@ public class ConnectionManager {
 		try {
 			connection = prepareHttpURLConection(request, parameters, requestMethd, contentType);
 			int HttpResult =connection.getResponseCode();  
-			if(HttpResult !=HttpURLConnection.HTTP_OK 
-					&& HttpResult !=HttpURLConnection.HTTP_NO_CONTENT ){//IF OK
+
+			if (HttpResult != HttpURLConnection.HTTP_OK 
+					&& HttpResult !=HttpURLConnection.HTTP_NO_CONTENT ) {
 				connection = null; //It was impossible establish a connection
 			}
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			connection = null;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			connection = null;
 		} catch (KeyManagementException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			connection = null;
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			connection = null;
 		} catch (KeyStoreException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			connection = null;
 		} 
 		return connection;
 	}
 	
-	private HttpURLConnection prepareHttpURLConection (String request, String parameters,
-			String requestMethd, String contentType) throws IOException, KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
+	private HttpURLConnection prepareHttpURLConection (String request, String parameters, String requestMethd, String contentType) 
+			throws IOException, KeyManagementException, NoSuchAlgorithmException, KeyStoreException {
+
 		HttpURLConnection connection = null;
 		URL url;
+
 		url = new URL(request);
-		connection = (HttpURLConnection) url.openConnection();      
-		if(requireSelfSigned)
+		connection = (HttpURLConnection) url.openConnection();  
+
+		if (requireSelfSigned) {
 			TrustModifier.relaxHostChecking(connection); 
+		}
+
 		connection.setDoOutput(true);
 		connection.setDoInput(true);
 		connection.setInstanceFollowRedirects(false); 
@@ -422,6 +439,7 @@ public class ConnectionManager {
 		connection.setRequestProperty("charset", "utf-8");
 		connection.setRequestProperty("Content-Length", "" + Integer.toString(parameters.getBytes().length));
 		connection.setUseCaches (false);
+
 		return connection;
 	}
 }

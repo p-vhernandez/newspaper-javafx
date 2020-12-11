@@ -4,6 +4,7 @@
 package application.controllers;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 import application.AppScenes;
@@ -21,7 +22,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -31,6 +34,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import serverConection.ConnectionManager;
+import serverConection.exceptions.ServerCommunicationError;
 
 /**
  * @author ÁngelLucas
@@ -95,8 +99,7 @@ public class NewsReaderController {
 	}
 
 	/**
-	 * This method is called after the 
-	 * screen (FXML file) has been loaded.
+	 * This method is called after the screen (FXML file) has been loaded.
 	 */
 	@FXML
 	void initialize() {
@@ -107,15 +110,15 @@ public class NewsReaderController {
 
 	private void getData() {
 		newsReaderModel.retrieveData();
-		
+
 		listArticles.setItems(newsReaderModel.getArticles());
 		selectorCategory.setItems(newsReaderModel.getCategories());
+		selectorCategory.getSelectionModel().select(Categories.ALL);
 	}
 
 	/**
-	 * Set the listeners to show changes
-	 * in the screen when an element is clicked
-	 */ 
+	 * Set the listeners to show changes in the screen when an element is clicked
+	 */
 	private void setListeners() {
 		listArticles.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Article>() {
 			@Override
@@ -129,7 +132,8 @@ public class NewsReaderController {
 		selectorCategory.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Categories>() {
 
 			@Override
-			public void changed(ObservableValue<? extends Categories> observable, Categories oldValue, Categories newValue) {
+			public void changed(ObservableValue<? extends Categories> observable, Categories oldValue,
+					Categories newValue) {
 				ObservableList<Article> allArticles = newsReaderModel.getArticles();
 
 				if (newValue.equals(Categories.ALL)) {
@@ -161,16 +165,15 @@ public class NewsReaderController {
 	}
 
 	/**
-	 * Method: Login
-	 * Can be done automatically (just one user)
-	 * or displaying a new for to allow more than one
-	 * user to enter with their credentials.
+	 * Method: Login Can be done automatically (just one user) or displaying a new
+	 * for to allow more than one user to enter with their credentials.
 	 * 
 	 * @param event
 	 */
 	@FXML
 	private void btnLoginClicked(ActionEvent event) {
 		try {
+			// TODO: upgrade functionality
 			// LoginController loginController = new LoginController(this);
 
 			// Button eventOrigin = (Button) event.getSource();
@@ -190,11 +193,13 @@ public class NewsReaderController {
 
 	@FXML
 	private void btnLoadArticleClicked() {
+		// TODO: add functionality
 		System.out.println("LOAD ARTICLE CLICKED");
 	}
 
 	@FXML
 	private void btnNewArticleClicked() {
+		// TODO: add functionality
 		System.out.println("NEW ARTICLE CLICKED");
 	}
 
@@ -204,9 +209,12 @@ public class NewsReaderController {
 			try {
 				ArticleEditController editController = new ArticleEditController(this);
 				editController.setArticle(selectedArticle);
+				editController.setUsr(usr);
+				editController.setConnectionMannager(newsReaderModel.getConnectionManager());
 
-				Button eventOrigin = (Button) event.getSource();
-				eventOrigin.getScene().setRoot(editController.getContent());
+				MenuItem eventOrigin = (MenuItem) event.getSource();
+				ContextMenu contextMenu = eventOrigin.getParentPopup();
+				contextMenu.getOwnerWindow().getScene().setRoot(editController.getContent());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -222,7 +230,20 @@ public class NewsReaderController {
 	@FXML
 	private void btnDeleteArticleClicked() {
 		if (selectedArticle != null) {
-			// TODO: deletion functionality
+			try {
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setTitle("Delete article");
+				alert.setHeaderText(null);
+				alert.setContentText("Are you sure you want to delete the selected article?");
+				
+				Optional<ButtonType> result = alert.showAndWait();
+				if (result.isPresent() && result.get() == ButtonType.OK) {
+					newsReaderModel.getConnectionManager().deleteArticle(selectedArticle.getIdArticle());
+					getData();
+				}
+			} catch (ServerCommunicationError e) {
+				e.printStackTrace();
+			}
 		} else {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Want to delete an article?");
@@ -256,7 +277,7 @@ public class NewsReaderController {
 		}
 	}
 
-	public void setConnectionManager (ConnectionManager connection){
+	public void setConnectionManager(ConnectionManager connection){
 		this.newsReaderModel.setDummyData(false); // System is connected so dummy data are not needed
 		this.newsReaderModel.setConnectionManager(connection);
 		this.getData();
@@ -288,8 +309,7 @@ public class NewsReaderController {
 	public void setUsr(User usr) {
 		this.usr = usr;
 
-		// Reload articles
-		this.getData();
+		getData();
 		checkMenuItems();
 	}
 
