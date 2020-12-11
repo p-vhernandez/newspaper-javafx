@@ -119,7 +119,7 @@
                         <Insets left="20.0" right="20.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnSave" mnemonicParsing="false" text="Save to file">
+                  <Button fx:id="btnSave" mnemonicParsing="false" onAction="#btnSaveClicked" text="Save to file">
                      <HBox.margin>
                         <Insets right="20.0" />
                      </HBox.margin>

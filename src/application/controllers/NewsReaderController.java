@@ -14,8 +14,6 @@ import application.news.Article;
 import application.news.Categories;
 import application.news.User;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -118,7 +116,7 @@ public class NewsReaderController {
 
 	public void clearArticleSelection() {
 		listArticles.getSelectionModel().clearSelection();
-		
+
 		articleImage.setImage(null);
 		WebEngine engine = articleAbstract.getEngine();
 		engine.loadContent("");
@@ -128,28 +126,20 @@ public class NewsReaderController {
 	 * Set the listeners to show changes in the screen when an element is clicked
 	 */
 	private void setListeners() {
-		listArticles.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Article>() {
-			@Override
-			public void changed(ObservableValue<? extends Article> observable, Article oldValue, Article newValue) {
-				selectedArticle = newValue;
-				showArticleData();
-				enableReadMore();
-			}
+		listArticles.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			selectedArticle = newValue;
+			showArticleData();
+			enableReadMore();
 		});
 
-		selectorCategory.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Categories>() {
+		selectorCategory.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+			ObservableList<Article> allArticles = newsReaderModel.getArticles();
 
-			@Override
-			public void changed(ObservableValue<? extends Categories> observable, Categories oldValue,
-					Categories newValue) {
-				ObservableList<Article> allArticles = newsReaderModel.getArticles();
-
-				if (newValue.equals(Categories.ALL)) {
-					listArticles.setItems(allArticles);
-				} else {
-					Predicate<Article> byCategory = article -> article.getCategory().equals(newValue.toString());
-					listArticles.setItems(allArticles.filtered(byCategory));
-				}
+			if (newValue.equals(Categories.ALL)) {
+				listArticles.setItems(allArticles);
+			} else {
+				Predicate<Article> byCategory = article -> article.getCategory().equals(newValue.toString());
+				listArticles.setItems(allArticles.filtered(byCategory));
 			}
 		});
 	}
@@ -202,13 +192,11 @@ public class NewsReaderController {
 	@FXML
 	private void btnLoadArticleClicked() {
 		// TODO: add functionality
-		System.out.println("LOAD ARTICLE CLICKED");
 	}
 
 	@FXML
 	private void btnNewArticleClicked() {
 		// TODO: add functionality
-		System.out.println("NEW ARTICLE CLICKED");
 	}
 
 	@FXML

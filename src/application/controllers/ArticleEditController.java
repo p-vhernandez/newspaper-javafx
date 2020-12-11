@@ -4,7 +4,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.json.JsonObject;
-import javax.swing.event.ChangeListener;
 
 import application.AppScenes;
 import application.models.ArticleEditModel;
@@ -12,7 +11,6 @@ import application.news.Article;
 import application.news.Categories;
 import application.news.User;
 import application.utils.JsonArticle;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,15 +23,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.scene.web.HTMLEditor;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -94,7 +89,6 @@ public class ArticleEditController {
 	private ObservableList<Categories> categories;
 
 	private boolean editAbstract = true;
-	private boolean htmlEditor = true;
 
 	public ArticleEditController(NewsReaderController newsReaderController) {
 		this.newsReaderController = newsReaderController;
@@ -216,6 +210,12 @@ public class ArticleEditController {
 	}
 
 	@FXML
+	private void btnSaveClicked(ActionEvent event) {
+		getArticleNewData();
+		write();
+	}
+
+	@FXML
 	private void btnChangeClicked(ActionEvent event) {
 		if (editAbstract) {
 			vBoxAbstract.setVisible(false);
@@ -326,7 +326,6 @@ public class ArticleEditController {
 	 * Article must have a title
 	 */
 	private void write() {
-		getArticleNewData();	
 		this.editingArticle.commit();
 
 		// Removes special characters not allowed for filenames
