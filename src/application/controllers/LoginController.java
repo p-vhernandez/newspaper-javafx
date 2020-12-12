@@ -4,6 +4,7 @@ import application.news.User;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
 
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 import application.AppScenes;
@@ -25,12 +26,16 @@ public class LoginController {
 		loginModel.setDummyData(true);
 
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.NEWS_DETAILS.getFxmlFile()));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.LOGIN.getFxmlFile()));
 			loader.setController(this);
 			root = loader.load();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	void onLoginCLicked(MouseEvent event) {
+
 	}
 
 	public Pane getContent() {
