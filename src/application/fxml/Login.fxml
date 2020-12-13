@@ -9,8 +9,8 @@
 
 <AnchorPane fx:id="loginWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="btnBack" layoutX="236.0" layoutY="289.0" mnemonicParsing="false" text="Back" />
-      <Button fx:id="btnLogin" layoutX="321.0" layoutY="289.0" mnemonicParsing="false" text="Login" />
+      <Button fx:id="btnBack" layoutX="236.0" layoutY="289.0" mnemonicParsing="false" onAction="#btnBackClicked" text="Back" />
+      <Button fx:id="btnLogin" layoutX="321.0" layoutY="289.0" mnemonicParsing="false" onAction="#btnLoginClicked" text="Login" />
       <TextField fx:id="passwordField" layoutX="226.0" layoutY="248.0" />
       <TextField fx:id="usernameField" layoutX="226.0" layoutY="200.0" />
       <Text layoutX="256.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login">

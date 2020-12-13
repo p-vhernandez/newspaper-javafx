@@ -1,6 +1,7 @@
 package application.controllers;
 
 import application.news.User;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
 
@@ -50,5 +51,11 @@ public class LoginController {
 	void setConnectionManager (ConnectionManager connection) {
 		this.loginModel.setConnectionManager(connection);
 	}
+
+	@FXML
+	private void btnLoginClicked() {System.out.println("Hola muy buenas. LoginClicked");}
+
+	@FXML
+	private void btnBackClicked() {System.out.println("Hola muy buenas. BackClicked");}
 	
 }
