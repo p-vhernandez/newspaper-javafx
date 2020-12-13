@@ -89,6 +89,7 @@ public class ArticleEditController {
 	private ObservableList<Categories> categories;
 
 	private boolean editAbstract = true;
+	private boolean articleCreation = false;
 
 	public ArticleEditController(NewsReaderController newsReaderController) {
 		this.newsReaderController = newsReaderController;
@@ -107,13 +108,15 @@ public class ArticleEditController {
 		return root;
 	}
 
+	public void setArticleCreation(boolean creation) {
+		this.articleCreation = creation;
+		checkCreation();
+	}
+
 	@FXML
 	void initialize() {
 		vBoxAbstract.managedProperty().bind(vBoxAbstract.visibleProperty());
 		vBoxBody.managedProperty().bind(vBoxBody.visibleProperty());
-
-		txtTitle.setEditable(false);
-		txtTitle.setFocusTraversable(false);
 		
 		setListeners();
 	}
@@ -126,20 +129,39 @@ public class ArticleEditController {
 			editingArticle.setCategory(newValue));
 	}
 
-	private void showArticleDetails() {
-		txtTitle.setText(editingArticle.getTitle());
-		txtSubtitle.setText(editingArticle.getSubtitle());
-		categorySelector.getSelectionModel().select(editingArticle.getCategory());
-		abstractEditor.setHtmlText(editingArticle.getAbstractText());
-		bodyEditor.setHtmlText(editingArticle.getBodyText());
+	private void checkCreation() {
+		if (articleCreation) {
+			txtTitle.setEditable(true);
+			txtTitle.setFocusTraversable(true);
+		} else {
+			txtTitle.setEditable(false);
+			txtTitle.setFocusTraversable(false);
+		}
+	}
 
-		showArticleImage();
+	private void showArticleDetails() {
+		if (editingArticle.getArticleOriginal() != null) {
+			txtTitle.setText(editingArticle.getTitle());
+			txtSubtitle.setText(editingArticle.getSubtitle());
+			categorySelector.getSelectionModel().select(editingArticle.getCategory());
+			abstractEditor.setHtmlText(editingArticle.getAbstractText());
+			bodyEditor.setHtmlText(editingArticle.getBodyText());
+
+			showArticleImage();
+		} else {
+			showGenericImage();
+		}
 	}
 
 	private void showArticleImage() {
 		if (editingArticle.getImage() != null) {
 			imgArticle.setImage(editingArticle.getImage());
 		}
+	}
+
+	private void showGenericImage() {
+		System.out.println("GENERIC IMAGE");
+		imgArticle.setImage(new Image(getClass().getResourceAsStream("../../images/ic_news.png")));
 	}
 
 	private void configureCategoriesData() {

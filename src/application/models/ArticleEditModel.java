@@ -47,7 +47,7 @@ public class ArticleEditModel {
 		addedChangeListener();
 	}
 
-	//Getters and setters
+	// Getters and setters
 	
 	/**
 	 * This method provide access to edited article abstract property. So, this abstract can be modified through this property
