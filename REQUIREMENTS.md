@@ -88,3 +88,5 @@ This screen provides services for:
     - This command discards all changes made since last "save to file" command
     
 [Edit & create window structure](resources/images/git/edit-and-create-news.PNG)
+
+- [ ] In the main page, if an article does not have an image, show the default one. 
