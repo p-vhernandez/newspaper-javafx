@@ -89,4 +89,5 @@ This screen provides services for:
     
 [Edit & create window structure](resources/images/git/edit-and-create-news.PNG)
 
+**Other**
 - [ ] In the main page, if an article does not have an image, show the default one. 
