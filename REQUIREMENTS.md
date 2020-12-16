@@ -91,3 +91,4 @@ This screen provides services for:
 
 **Other**
 - [ ] In the main page, if an article does not have an image, show the default one. 
+- [ ] In the article details, use the same method as in the article edition/creation in order to show the abstract or the body (hide components).
