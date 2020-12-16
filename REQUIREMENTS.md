@@ -70,21 +70,26 @@ The extra exercise consists in define and use a login form. In this case, studen
 **Form for editing and creating articles**
 
 This screen provides services for:
-- [ ] Add an image:
+- [x] Add an image:
     - The provided form "ImagePicker" can be used to implement this functionality
-- [ ] Add title
-- [ ] Add subtitle
-- [ ] Set article's category
-- [ ] Add abstract:
+- [x] Add title
+- [x] Add subtitle
+- [x] Set article's category
+- [x] Add abstract:
     - Can be in plain text or HTML
-- [ ] Add body:
+- [x] Add body:
     - Can be in plain text or HTML
 - [ ] Send the new or modify the existing to the server and go back to the main window. (Title and category must have been defined)
-- [ ] Save a draft to a file:
+- [x] Save a draft to a file:
     - This command saves the article to a file in the local machine
     - This draft could be loaded again for editing or send it to a server
     - To save an article, title must have been defined
-- [ ] Back:
+- [x] Back:
     - This command discards all changes made since last "save to file" command
     
 [Edit & create window structure](resources/images/git/edit-and-create-news.PNG)
+
+**Other**
+- [ ] Lower the downloading article's time -> avoid downloading each article using the *for* and use the thumbnail images in order to show the images in main page. Once user goes to article details, download the full article's information with getFullArticle().
+- [ ] In the main page, if an article does not have an image, show the default one. 
+- [ ] In the article details, use the same method as in the article edition/creation in order to show the abstract or the body (hide components).
