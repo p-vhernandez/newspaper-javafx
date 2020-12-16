@@ -90,5 +90,6 @@ This screen provides services for:
 [Edit & create window structure](resources/images/git/edit-and-create-news.PNG)
 
 **Other**
+- [ ] Lower the downloading article's time -> avoid downloading each article using the *for* and use the thumbnail images in order to show the images in main page. Once user goes to article details, download the full article's information with getFullArticle().
 - [ ] In the main page, if an article does not have an image, show the default one. 
 - [ ] In the article details, use the same method as in the article edition/creation in order to show the abstract or the body (hide components).
