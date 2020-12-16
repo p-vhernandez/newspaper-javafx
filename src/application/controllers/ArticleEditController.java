@@ -89,6 +89,7 @@ public class ArticleEditController {
 	private ObservableList<Categories> categories;
 
 	private boolean editAbstract = true;
+	private boolean articleCreation = false;
 
 	public ArticleEditController(NewsReaderController newsReaderController) {
 		this.newsReaderController = newsReaderController;
@@ -107,18 +108,23 @@ public class ArticleEditController {
 		return root;
 	}
 
+	public void setArticleCreation(boolean creation) {
+		this.articleCreation = creation;
+		checkCreation();
+	}
+
 	@FXML
 	void initialize() {
 		vBoxAbstract.managedProperty().bind(vBoxAbstract.visibleProperty());
 		vBoxBody.managedProperty().bind(vBoxBody.visibleProperty());
-
-		txtTitle.setEditable(false);
-		txtTitle.setFocusTraversable(false);
 		
 		setListeners();
 	}
 
 	private void setListeners() {
+		txtTitle.textProperty().addListener((observable, oldValue, newValue) ->
+			editingArticle.setTitle(newValue));
+
 		txtSubtitle.textProperty().addListener((observable, oldValue, newValue) -> 
 			editingArticle.setSubtitle(newValue));
 
@@ -126,20 +132,39 @@ public class ArticleEditController {
 			editingArticle.setCategory(newValue));
 	}
 
-	private void showArticleDetails() {
-		txtTitle.setText(editingArticle.getTitle());
-		txtSubtitle.setText(editingArticle.getSubtitle());
-		categorySelector.getSelectionModel().select(editingArticle.getCategory());
-		abstractEditor.setHtmlText(editingArticle.getAbstractText());
-		bodyEditor.setHtmlText(editingArticle.getBodyText());
+	private void checkCreation() {
+		if (articleCreation) {
+			txtTitle.setEditable(true);
+			txtTitle.setFocusTraversable(true);
+		} else {
+			txtTitle.setEditable(false);
+			txtTitle.setFocusTraversable(false);
+		}
+	}
 
-		showArticleImage();
+	private void showArticleDetails() {
+		if (editingArticle.getArticleOriginal() != null) {
+			txtTitle.setText(editingArticle.getTitle());
+			txtSubtitle.setText(editingArticle.getSubtitle());
+			categorySelector.getSelectionModel().select(editingArticle.getCategory());
+			abstractEditor.setHtmlText(editingArticle.getAbstractText());
+			bodyEditor.setHtmlText(editingArticle.getBodyText());
+
+			showArticleImage();
+		} else {
+			showGenericImage();
+		}
 	}
 
 	private void showArticleImage() {
 		if (editingArticle.getImage() != null) {
 			imgArticle.setImage(editingArticle.getImage());
 		}
+	}
+
+	private void showGenericImage() {
+		System.out.println("GENERIC IMAGE");
+		imgArticle.setImage(new Image(getClass().getResourceAsStream("../../images/ic_news.png")));
 	}
 
 	private void configureCategoriesData() {
@@ -204,7 +229,13 @@ public class ArticleEditController {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("An error ocurred");
 			alert.setHeaderText(null);
-			alert.setContentText("The articule could not be edited.");
+
+			if (articleCreation) {
+				alert.setContentText("The articule could not be created.");
+			} else {
+				alert.setContentText("The articule could not be edited.");
+			}
+			
 			alert.showAndWait();
 		}
 	}
@@ -232,6 +263,7 @@ public class ArticleEditController {
 
 	@FXML
 	private void btnBackClicked(ActionEvent event) {
+		newsReaderController.getData();
 		Button eventOrigin = (Button) event.getSource();
 		eventOrigin.getScene().setRoot(newsReaderController.getContent());
 	}

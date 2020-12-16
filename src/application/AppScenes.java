@@ -14,9 +14,10 @@ public enum AppScenes {
 	READER("/application/fxml/NewsReader.fxml"), 
  	NEWS_DETAILS ("/application/fxml/ArticleDetails.fxml"),
 	EDITOR("/application/fxml/ArticleEdit.fxml"), 
+	CREATOR("/application/fxml/ArticleNew.fxml"), 
 	ADMIN("/application/fxml/AdminNews.fxml"),
-	// IMAGE_PICKER("/application/fxml/ImagePicker.fxml");
-	IMAGE_PICKER("ImagePickerMaterailDesign.fxml");
+	IMAGE_PICKER("/application/fxml/ImagePicker.fxml");
+	// IMAGE_PICKER("/application/fxml/ImagePickerMaterailDesign.fxml");
  
 	private String fxmlFile;
  

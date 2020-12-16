@@ -113,7 +113,7 @@ public class NewsReaderController {
 		checkMenuItems();
 	}
 
-	private void getData() {
+	void getData() {
 		newsReaderModel.retrieveData();
 
 		listArticles.setItems(newsReaderModel.getArticles());
@@ -218,8 +218,8 @@ public class NewsReaderController {
 				articleToLoad = JsonArticle.jsonToArticle(jsonArticle);
 
 				ArticleEditController editController = new ArticleEditController(this);
-				editController.setArticle(articleToLoad);
 				editController.setUsr(usr);
+				editController.setArticle(articleToLoad);
 				editController.setConnectionMannager(newsReaderModel.getConnectionManager());
 
 				MenuItem eventOrigin = (MenuItem) event.getSource();
@@ -235,8 +235,20 @@ public class NewsReaderController {
 	}
 
 	@FXML
-	private void btnNewArticleClicked() {
-		// TODO: add functionality
+	private void btnNewArticleClicked(ActionEvent event) {
+		try {
+			ArticleEditController editController = new ArticleEditController(this);
+			editController.setUsr(usr);
+			editController.setArticle(null);
+			editController.setConnectionMannager(newsReaderModel.getConnectionManager());
+
+			MenuItem eventOrigin = (MenuItem) event.getSource();
+			ContextMenu contextMenu = eventOrigin.getParentPopup();
+			contextMenu.getOwnerWindow().getScene().setRoot(editController.getContent());
+		} catch (Exception e) {
+			// TODO: show error
+			e.printStackTrace();
+		}
 	}
 
 	@FXML

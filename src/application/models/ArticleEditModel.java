@@ -47,7 +47,7 @@ public class ArticleEditModel {
 		addedChangeListener();
 	}
 
-	//Getters and setters
+	// Getters and setters
 	
 	/**
 	 * This method provide access to edited article abstract property. So, this abstract can be modified through this property
@@ -191,6 +191,15 @@ public class ArticleEditModel {
 	 */
 	public String getTitle() {
 		return edited.getTitle();
+	}
+
+	/**
+	 * This method sets the title of the edited article
+	 * @param title the title to be set
+	 */
+	public void setTitle(String title) {
+		edited.setTitle(title);
+		this.bModified = true;
 	}
 	
 	/**
