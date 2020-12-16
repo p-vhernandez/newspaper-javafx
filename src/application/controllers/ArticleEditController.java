@@ -122,6 +122,9 @@ public class ArticleEditController {
 	}
 
 	private void setListeners() {
+		txtTitle.textProperty().addListener((observable, oldValue, newValue) ->
+			editingArticle.setTitle(newValue));
+
 		txtSubtitle.textProperty().addListener((observable, oldValue, newValue) -> 
 			editingArticle.setSubtitle(newValue));
 
@@ -226,7 +229,13 @@ public class ArticleEditController {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("An error ocurred");
 			alert.setHeaderText(null);
-			alert.setContentText("The articule could not be edited.");
+
+			if (articleCreation) {
+				alert.setContentText("The articule could not be created.");
+			} else {
+				alert.setContentText("The articule could not be edited.");
+			}
+			
 			alert.showAndWait();
 		}
 	}
@@ -254,6 +263,7 @@ public class ArticleEditController {
 
 	@FXML
 	private void btnBackClicked(ActionEvent event) {
+		newsReaderController.getData();
 		Button eventOrigin = (Button) event.getSource();
 		eventOrigin.getScene().setRoot(newsReaderController.getContent());
 	}

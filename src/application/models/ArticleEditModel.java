@@ -192,6 +192,15 @@ public class ArticleEditModel {
 	public String getTitle() {
 		return edited.getTitle();
 	}
+
+	/**
+	 * This method sets the title of the edited article
+	 * @param title the title to be set
+	 */
+	public void setTitle(String title) {
+		edited.setTitle(title);
+		this.bModified = true;
+	}
 	
 	/**
 	 * 

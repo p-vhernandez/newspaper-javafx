@@ -113,7 +113,7 @@ public class NewsReaderController {
 		checkMenuItems();
 	}
 
-	private void getData() {
+	void getData() {
 		newsReaderModel.retrieveData();
 
 		listArticles.setItems(newsReaderModel.getArticles());
