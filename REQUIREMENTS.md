@@ -79,7 +79,7 @@ This screen provides services for:
     - Can be in plain text or HTML
 - [x] Add body:
     - Can be in plain text or HTML
-- [ ] Send the new or modify the existing to the server and go back to the main window. (Title and category must have been defined)
+- [x] Send the new or modify the existing to the server and go back to the main window. (Title and category must have been defined)
 - [x] Save a draft to a file:
     - This command saves the article to a file in the local machine
     - This draft could be loaded again for editing or send it to a server
