@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
 import java.awt.event.MouseEvent;
@@ -24,9 +25,15 @@ public class LoginController {
 
 	private NewsReaderController newsReaderController;
 
+	@FXML
+	TextField usernameField;
+
+	@FXML
+	TextField passwordField;
+
 	public LoginController(NewsReaderController newsReaderController) {
 		this.newsReaderController = newsReaderController;
-		loginModel.setDummyData(true);
+		loginModel.setDummyData(false);
 
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.LOGIN.getFxmlFile()));
@@ -35,10 +42,6 @@ public class LoginController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	void onLoginCLicked(MouseEvent event) {
-
 	}
 
 	public Pane getContent() {
@@ -55,7 +58,13 @@ public class LoginController {
 	}
 
 	@FXML
-	private void btnLoginClicked() {System.out.println("Hola muy buenas. LoginClicked");}
+	private void btnLoginClicked(ActionEvent event) {
+		String user = usernameField.getText();
+		String pass = passwordField.getText();
+		// newsReaderController.setUsr(loginModel.validateUser(user,pass));
+		Button eventOrigin = (Button) event.getSource();
+		eventOrigin.getScene().setRoot(newsReaderController.getContent());
+	}
 
 	@FXML
 	private void btnBackClicked(ActionEvent event) {
