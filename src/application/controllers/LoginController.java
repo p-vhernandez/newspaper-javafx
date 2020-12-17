@@ -1,8 +1,10 @@
 package application.controllers;
 
 import application.news.User;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 
 import java.awt.event.MouseEvent;
@@ -56,6 +58,9 @@ public class LoginController {
 	private void btnLoginClicked() {System.out.println("Hola muy buenas. LoginClicked");}
 
 	@FXML
-	private void btnBackClicked() {System.out.println("Hola muy buenas. BackClicked");}
+	private void btnBackClicked(ActionEvent event) {
+		Button eventOrigin = (Button) event.getSource();
+		eventOrigin.getScene().setRoot(newsReaderController.getContent());
+	}
 	
 }
