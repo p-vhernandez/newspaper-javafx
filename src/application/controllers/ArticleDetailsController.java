@@ -44,6 +44,9 @@ public class ArticleDetailsController {
 
 	@FXML
 	private Button btnChangeContent;
+
+	@FXML 
+	private Label lblContent;
 	
 	private User usr;
 	private Article article;
@@ -102,11 +105,13 @@ public class ArticleDetailsController {
 			WebEngine engine = articleContent.getEngine();
 			engine.loadContent(article.getBodyText());
 			changeButtonText("Show abstract");
+			lblContent.setText("Body:");
 			abstractShown = false;
 		} else {
 			WebEngine engine = articleContent.getEngine();
 			engine.loadContent(article.getAbstractText());
 			changeButtonText("Show body");
+			lblContent.setText("Abstract:");
 			abstractShown = true;
 		}
 	}

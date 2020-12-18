@@ -25,7 +25,7 @@ public class LoginModel {
 	/**
 	 * If is true dummyData for users will be used
 	 */
-	private boolean dummyData = true;
+	private boolean dummyData = false;
 
 	/**
 	 * The ModelManager is used to communicate with articles server
@@ -34,8 +34,8 @@ public class LoginModel {
 
 	public LoginModel() {
 		// Dummy data for test
-		String [] login = {"Reader1", "Reader2", "Admin1"};
-		String []passwd = {"reader1", "reader2", "admin1"};
+		String[] login = {"Reader1", "Reader2", "Admin1"};
+		String[] passwd = {"reader1", "reader2", "admin1"};
 
 		for (int i = 1; i <= login.length; i++) {
 			users.put(login[i - 1] + ":" + passwd[i - 1], new User(login[i - 1], i + 1));
@@ -71,7 +71,7 @@ public class LoginModel {
 		User usr = null;
 
 		if (this.dummyData) {
-			usr = users.get(login + ":" + passwd);	
+			usr = users.get(login + ":" + passwd);
 		} else {
 			try {
 				connectionManager.login(login, passwd);
@@ -81,7 +81,7 @@ public class LoginModel {
 				Logger.getGlobal().log(Level.INFO,"Login error! incorrect user or password!!");
 			}
 		}
-		
+
 		return usr;
 	}
 }
