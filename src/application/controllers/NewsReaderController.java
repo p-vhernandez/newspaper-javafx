@@ -178,13 +178,12 @@ public class NewsReaderController {
 	@FXML
 	private void btnLoginClicked(ActionEvent event) {
 		try {
-			// TODO: upgrade functionality
-			// LoginController loginController = new LoginController(this);
+			LoginController loginController = new LoginController(this);
 
-			// Button eventOrigin = (Button) event.getSource();
-			// eventOrigin.getScene().setRoot(loginController.getContent());
+			Button eventOrigin = (Button) event.getSource();
+			eventOrigin.getScene().setRoot(loginController.getContent());
 
-			autoLogin();
+			// autoLogin();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
