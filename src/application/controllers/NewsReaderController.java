@@ -179,6 +179,7 @@ public class NewsReaderController {
 	private void btnLoginClicked(ActionEvent event) {
 		try {
 			LoginController loginController = new LoginController(this);
+			loginController.setConnectionManager(newsReaderModel.getConnectionManager());
 
 			Button eventOrigin = (Button) event.getSource();
 			eventOrigin.getScene().setRoot(loginController.getContent());

@@ -224,6 +224,7 @@ public class ArticleEditController {
 		
 		if (send()) {
 			newsReaderController.clearArticleSelection();
+			newsReaderController.getData();
 			btnBackClicked(event);
 		} else {
 			Alert alert = new Alert(AlertType.ERROR);
@@ -263,7 +264,6 @@ public class ArticleEditController {
 
 	@FXML
 	private void btnBackClicked(ActionEvent event) {
-		newsReaderController.getData();
 		Button eventOrigin = (Button) event.getSource();
 		eventOrigin.getScene().setRoot(newsReaderController.getContent());
 	}
@@ -311,12 +311,15 @@ public class ArticleEditController {
 	 */
 	public void setConnectionMannager(ConnectionManager connection) {
 		this.connection = connection;
-		enableSendBtn();
 		enableBackBtn();
 	}
 
 	private void enableSendBtn() {
 		btnSend.setDisable(false);
+	}
+
+	private void disableSendBtn() {
+		btnSend.setDisable(true);
 	}
 
 	private void enableBackBtn() {
@@ -328,8 +331,12 @@ public class ArticleEditController {
 	 */
 	public void setUsr(User usr) {
 		this.usr = usr;
-		// TODO: Update UI and controls 
 		
+		if (this.usr == null) {
+			disableSendBtn();
+		} else {
+			enableSendBtn();
+		}
 	}
 
 	public Article getArticle() {
