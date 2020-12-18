@@ -32,6 +32,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebEngine;
@@ -287,6 +288,7 @@ public class NewsReaderController {
 				Optional<ButtonType> result = alert.showAndWait();
 				if (result.isPresent() && result.get() == ButtonType.OK) {
 					newsReaderModel.getConnectionManager().deleteArticle(selectedArticle.getIdArticle());
+					clearArticleSelection();
 					getData();
 				}
 			} catch (ServerCommunicationError e) {
@@ -318,6 +320,8 @@ public class NewsReaderController {
 		if (selectedArticle != null) {
 			if (selectedArticle.getImageData() != null) {
 				articleImage.setImage(selectedArticle.getImageData());
+			} else {
+				articleImage.setImage(new Image(getClass().getResourceAsStream("../../images/ic_news.png")));
 			}
 
 			WebEngine engine = articleAbstract.getEngine();

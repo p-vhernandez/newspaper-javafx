@@ -11,6 +11,7 @@ import javafx.stage.StageStyle;
 import serverConection.ConnectionManager;
 import serverConection.exceptions.AuthenticationError;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
 public class Main extends Application {
@@ -28,6 +29,7 @@ public class Main extends Application {
 		Scene scene = new Scene(root);
 		scene.getStylesheets().add(getClass().getResource("css/application.css").toExternalForm());
 		primaryStage.setTitle("Newspaper");
+		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("../images/ic_news.png")));
 		primaryStage.initStyle(StageStyle.DECORATED);
 		primaryStage.setScene(scene);
 		primaryStage.show();
