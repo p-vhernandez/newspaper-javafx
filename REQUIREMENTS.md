@@ -28,8 +28,8 @@ The extra exercise consists in define and use a login form. In this case, studen
   
 **Main window**
 - [x] List of published articles (login is not required)
-- [ ] Login
-- [ ] New:
+- [x] Login
+- [x] New:
     - Login is not required
     - Allows to create a new article
     - Only logged users can send articles to server
@@ -79,7 +79,7 @@ This screen provides services for:
     - Can be in plain text or HTML
 - [x] Add body:
     - Can be in plain text or HTML
-- [ ] Send the new or modify the existing to the server and go back to the main window. (Title and category must have been defined)
+- [x] Send the new or modify the existing to the server and go back to the main window. (Title and category must have been defined)
 - [x] Save a draft to a file:
     - This command saves the article to a file in the local machine
     - This draft could be loaded again for editing or send it to a server
@@ -92,4 +92,4 @@ This screen provides services for:
 **Other**
 - [ ] Lower the downloading article's time -> avoid downloading each article using the *for* and use the thumbnail images in order to show the images in main page. Once user goes to article details, download the full article's information with getFullArticle().
 - [ ] In the main page, if an article does not have an image, show the default one. 
-- [ ] In the article details, use the same method as in the article edition/creation in order to show the abstract or the body (hide components).
+- [x] In the article details, use the same method as in the article edition/creation in order to show the abstract or the body (hide components).
