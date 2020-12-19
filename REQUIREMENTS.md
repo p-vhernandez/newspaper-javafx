@@ -28,8 +28,8 @@ The extra exercise consists in define and use a login form. In this case, studen
   
 **Main window**
 - [x] List of published articles (login is not required)
-- [ ] Login
-- [ ] New:
+- [x] Login
+- [x] New:
     - Login is not required
     - Allows to create a new article
     - Only logged users can send articles to server

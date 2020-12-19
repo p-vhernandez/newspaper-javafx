@@ -8,7 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 import application.AppScenes;
@@ -48,12 +47,12 @@ public class LoginController {
 		return root;
 	}
 	
-	User getLoggedUsr() {
+	public User getLoggedUsr() {
 		return loggedUsr;
 		
 	}
 		
-	void setConnectionManager (ConnectionManager connection) {
+	public void setConnectionManager (ConnectionManager connection) {
 		this.loginModel.setConnectionManager(connection);
 	}
 
@@ -61,9 +60,16 @@ public class LoginController {
 	private void btnLoginClicked(ActionEvent event) {
 		String user = usernameField.getText();
 		String pass = passwordField.getText();
-		// newsReaderController.setUsr(loginModel.validateUser(user,pass));
-		Button eventOrigin = (Button) event.getSource();
-		eventOrigin.getScene().setRoot(newsReaderController.getContent());
+
+		User loggedUser = loginModel.validateUser(user, pass);
+		if (loggedUser != null) {
+			newsReaderController.setUsr(loggedUser);
+
+			Button eventOrigin = (Button) event.getSource();
+			eventOrigin.getScene().setRoot(newsReaderController.getContent());
+		} else {
+			// TODO: show error
+		}
 	}
 
 	@FXML

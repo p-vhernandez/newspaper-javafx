@@ -73,11 +73,6 @@ public class ArticleDetailsController {
 		return root;
 	}
 
-	@FXML
-	void initialize() {
-		// TODO: 
-	}
-
 	private void showArticleDetails() {
 		if (article != null) {
 			lblTitle.setText(article.getTitle());
@@ -127,7 +122,6 @@ public class ArticleDetailsController {
 		this.usr = usr;
 
 		if (usr == null) {
-			// Not logged user
 			return; 
 		}
 
