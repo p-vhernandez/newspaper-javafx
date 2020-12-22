@@ -114,22 +114,22 @@
             </VBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="btnSend" disable="true" mnemonicParsing="false" onAction="#btnSendClicked" text="Send &amp; back">
+                  <Button fx:id="btnSend" disable="true" mnemonicParsing="false" onAction="#btnSendClicked" style="-fx-background-color: black; -fx-text-fill: white; -fx-font-weight: bold; -fx-min-width: 120px;" text="Send &amp; back">
                      <HBox.margin>
                         <Insets left="20.0" right="20.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnSave" mnemonicParsing="false" onAction="#btnSaveClicked" text="Save to file">
+                  <Button fx:id="btnSave" mnemonicParsing="false" onAction="#btnSaveClicked" style="-fx-background-color: black; -fx-text-fill: white; -fx-font-weight: bold; -fx-min-width: 120px;" text="Save to file">
                      <HBox.margin>
                         <Insets right="20.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnChange" mnemonicParsing="false" onAction="#btnChangeClicked" text="Write body">
+                  <Button fx:id="btnChange" mnemonicParsing="false" onAction="#btnChangeClicked" style="-fx-background-color: black; -fx-text-fill: white; -fx-font-weight: bold; -fx-min-width: 120px;" text="Write body">
                      <HBox.margin>
                         <Insets right="20.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnBack" disable="true" mnemonicParsing="false" onAction="#btnBackClicked" text="Back" />
+                  <Button fx:id="btnBack" disable="true" mnemonicParsing="false" onAction="#btnBackClicked" style="-fx-background-color: black; -fx-text-fill: white; -fx-font-weight: bold; -fx-min-width: 120px;" text="Back" />
                </children>
             </HBox>
          </children>

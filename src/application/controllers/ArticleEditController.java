@@ -163,7 +163,6 @@ public class ArticleEditController {
 	}
 
 	private void showGenericImage() {
-		System.out.println("GENERIC IMAGE");
 		imgArticle.setImage(new Image(getClass().getResourceAsStream("../../images/ic_news.png")));
 	}
 

@@ -47,6 +47,9 @@ public class ArticleDetailsController {
 
 	@FXML 
 	private Label lblContent;
+
+	@FXML
+	private Label lblUser;
 	
 	private User usr;
 	private Article article;
@@ -69,8 +72,18 @@ public class ArticleDetailsController {
 		}
 	}
 
+	public void setNewsReaderController(NewsReaderController newsReaderController) {
+		this.newsReaderController = newsReaderController;
+	}
+
 	public Pane getContent() {
 		return root;
+	}
+
+	@FXML
+	void initialize() {
+		hideWelcomeMessage();
+		lblUser.managedProperty().bind(lblUser.visibleProperty());
 	}
 
 	private void showArticleDetails() {
@@ -121,11 +134,17 @@ public class ArticleDetailsController {
 	public void setUsr(User usr) {
 		this.usr = usr;
 
-		if (usr == null) {
-			return; 
+		if (this.usr != null) {
+			lblUser.setText("Welcome back, " + this.usr.getLogin() + "!");
+			lblUser.setVisible(true);
+		} else {
+			hideWelcomeMessage();
 		}
+	}
 
-		// TODO Update UI information
+	private void hideWelcomeMessage() {
+		lblUser.setText("");
+		lblUser.setVisible(false);
 	}
 
 	/**
