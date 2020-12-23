@@ -1,11 +1,13 @@
 package application;
 
+import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import application.controllers.NewsReaderController;
 import application.news.User;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import serverConection.ConnectionManager;
@@ -20,19 +22,24 @@ public class Main extends Application {
 	private NewsReaderController newsReaderController;
 
 	@Override
-	public void start(Stage primaryStage) {		
-		newsReaderController = new NewsReaderController();
-		newsReaderController.setMainController(this);
-		Pane root = newsReaderController.getContent();
-		setConnection();
+	public void start(Stage primaryStage) {
+		try {
+			FXMLLoader loader = new FXMLLoader (getClass().getResource(AppScenes.READER.getFxmlFile()));
+			Pane root = loader.load();
+			newsReaderController = loader.<NewsReaderController>getController();
+			newsReaderController.setContent(root);
+			setConnection();	
 
-		Scene scene = new Scene(root);
-		scene.getStylesheets().add(getClass().getResource("css/application.css").toExternalForm());
-		primaryStage.setTitle("Newspaper");
-		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("../images/ic_news.png")));
-		primaryStage.initStyle(StageStyle.DECORATED);
-		primaryStage.setScene(scene);
-		primaryStage.show();
+			Scene scene = new Scene(root);
+			scene.getStylesheets().add(getClass().getResource("css/application.css").toExternalForm());
+			primaryStage.setTitle("Newspaper");
+			primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("../images/ic_news.png")));
+			primaryStage.initStyle(StageStyle.DECORATED);
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void setConnection() {
@@ -68,18 +75,8 @@ public class Main extends Application {
 		Properties prop = new Properties();
 		prop.setProperty(ConnectionManager.ATTR_SERVICE_URL, "https://sanger.dia.fi.upm.es/pui-rest-news/");
 		prop.setProperty(ConnectionManager.ATTR_REQUIRE_SELF_CERT, "TRUE");
-		
-		/* For http & https proxy 
-		prop.setProperty(ConnectionManager.ATTR_PROXY_HOST, "http://proxy.fi.upm.es");
-		prop.setProperty(ConnectionManager.ATTR_PROXY_PORT, "80");
-		*/
-		
-		/* For proxy or apache password auth 
-		prop.setProperty(ConnectionManager.ATTR_PROXY_USER, "...");
-		prop.setProperty(ConnectionManager.ATTR_PROXY_PASS, "...");
-		*/
 
 		return prop;
-	}
+	} 
 	
 }
