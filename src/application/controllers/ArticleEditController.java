@@ -91,17 +91,12 @@ public class ArticleEditController {
 	private boolean editAbstract = true;
 	private boolean articleCreation = false;
 
-	public ArticleEditController(NewsReaderController newsReaderController) {
-		this.newsReaderController = newsReaderController;
-		categories = FXCollections.observableArrayList();
+	public void setContent(Pane root) {
+		this.root = root;
+	}
 
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.EDITOR.getFxmlFile()));
-			loader.setController(this);
-			root = loader.load();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public void setNewsReaderController(NewsReaderController newsReaderController) {
+		this.newsReaderController = newsReaderController;
 	}
 
 	public Pane getContent() {
@@ -115,6 +110,8 @@ public class ArticleEditController {
 
 	@FXML
 	void initialize() {
+		categories = FXCollections.observableArrayList();
+
 		vBoxAbstract.managedProperty().bind(vBoxAbstract.visibleProperty());
 		vBoxBody.managedProperty().bind(vBoxBody.visibleProperty());
 		
@@ -264,7 +261,7 @@ public class ArticleEditController {
 	@FXML
 	private void btnBackClicked(ActionEvent event) {
 		Button eventOrigin = (Button) event.getSource();
-		// eventOrigin.getScene().setRoot(newsReaderController.getContent());
+		eventOrigin.getScene().setRoot(newsReaderController.getContent());
 	}
 
 	private void changeBtnChangeText(String text) {
@@ -374,7 +371,6 @@ public class ArticleEditController {
 		try (FileWriter file = new FileWriter(fileName)) {
 			file.write(data.toString());
 			file.flush();
-			System.out.println("Saved to path:" + fileName);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -235,14 +235,20 @@ public class NewsReaderController {
 			try {
 				articleToLoad = JsonArticle.jsonToArticle(jsonArticle);
 
-				ArticleEditController editController = new ArticleEditController(this);
+				MenuItem eventOrigin = (MenuItem) event.getSource();
+				ContextMenu contextMenu = eventOrigin.getParentPopup();
+				Scene parentScene = contextMenu.getOwnerWindow().getScene();
+
+				FXMLLoader loader = new FXMLLoader (getClass().getResource(AppScenes.EDITOR.getFxmlFile()));
+				Pane editorRoot = loader.load();
+				parentScene.setRoot(editorRoot);
+
+				ArticleEditController editController = loader.<ArticleEditController>getController();
+				editController.setContent(editorRoot);
+				editController.setNewsReaderController(this);
 				editController.setUsr(usr);
 				editController.setArticle(articleToLoad);
 				editController.setConnectionMannager(newsReaderModel.getConnectionManager());
-
-				MenuItem eventOrigin = (MenuItem) event.getSource();
-				ContextMenu contextMenu = eventOrigin.getParentPopup();
-				contextMenu.getOwnerWindow().getScene().setRoot(editController.getContent());
 			} catch (Exception e) {
 				// TODO: show error
 				e.printStackTrace();
@@ -255,14 +261,20 @@ public class NewsReaderController {
 	@FXML
 	private void btnNewArticleClicked(ActionEvent event) {
 		try {
-			ArticleEditController editController = new ArticleEditController(this);
+			MenuItem eventOrigin = (MenuItem) event.getSource();
+			ContextMenu contextMenu = eventOrigin.getParentPopup();
+			Scene parentScene = contextMenu.getOwnerWindow().getScene();
+
+			FXMLLoader loader = new FXMLLoader (getClass().getResource(AppScenes.EDITOR.getFxmlFile()));
+			Pane editorRoot = loader.load();
+			parentScene.setRoot(editorRoot);
+
+			ArticleEditController editController = loader.<ArticleEditController>getController();
+			editController.setContent(editorRoot);
+			editController.setNewsReaderController(this);
 			editController.setUsr(usr);
 			editController.setArticle(null);
 			editController.setConnectionMannager(newsReaderModel.getConnectionManager());
-
-			MenuItem eventOrigin = (MenuItem) event.getSource();
-			ContextMenu contextMenu = eventOrigin.getParentPopup();
-			contextMenu.getOwnerWindow().getScene().setRoot(editController.getContent());
 		} catch (Exception e) {
 			// TODO: show error
 			e.printStackTrace();
@@ -273,14 +285,20 @@ public class NewsReaderController {
 	private void btnEditArticleClicked(ActionEvent event) {
 		if (selectedArticle != null) {
 			try {
-				ArticleEditController editController = new ArticleEditController(this);
-				editController.setArticle(selectedArticle);
-				editController.setUsr(usr);
-				editController.setConnectionMannager(newsReaderModel.getConnectionManager());
-
 				MenuItem eventOrigin = (MenuItem) event.getSource();
 				ContextMenu contextMenu = eventOrigin.getParentPopup();
-				contextMenu.getOwnerWindow().getScene().setRoot(editController.getContent());
+				Scene parentScene = contextMenu.getOwnerWindow().getScene();
+
+				FXMLLoader loader = new FXMLLoader (getClass().getResource(AppScenes.EDITOR.getFxmlFile()));
+				Pane editorRoot = loader.load();
+				parentScene.setRoot(editorRoot);
+
+				ArticleEditController editController = loader.<ArticleEditController>getController();
+				editController.setContent(editorRoot);
+				editController.setNewsReaderController(this);
+				editController.setUsr(usr);
+				editController.setArticle(null);
+				editController.setConnectionMannager(newsReaderModel.getConnectionManager());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
