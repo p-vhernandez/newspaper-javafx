@@ -17,7 +17,6 @@ import application.news.Article;
 import application.news.Categories;
 import application.news.User;
 import application.utils.JsonArticle;
-import application.utils.exceptions.ErrorMalFormedArticle;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -28,6 +27,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -81,6 +81,12 @@ public class NewsReaderController {
 	@FXML
 	private MenuItem btnDeleteArticle;
 
+	@FXML
+	private MenuItem btnLogout;
+
+	@FXML
+	private Label lblUser;
+
 	private User usr;
 	private Pane root;
 	private Article selectedArticle;
@@ -109,6 +115,9 @@ public class NewsReaderController {
 	 */
 	@FXML
 	void initialize() {
+		hideWelcomeMessage();
+		lblUser.managedProperty().bind(lblUser.visibleProperty());
+
 		getData();
 		setListeners();
 		checkMenuItems();
@@ -161,6 +170,7 @@ public class NewsReaderController {
 	private void readMore(ActionEvent event) {
 		try {
 			ArticleDetailsController detailsController = new ArticleDetailsController(this);
+			detailsController.setUsr(usr);
 			detailsController.setArticle(selectedArticle);
 
 			Button eventOrigin = (Button) event.getSource();
@@ -304,6 +314,16 @@ public class NewsReaderController {
 	}
 
 	/**
+	 * Function that allows the user to log out
+	 * Sets the user to null and retrieves all articles
+	 * @param event
+	 */
+	@FXML
+	private void btnLogoutClicked(ActionEvent event) {
+		setUsr(null);
+	}
+
+	/**
 	 * Function that closes the applciation.
 	 * @param event
 	 */
@@ -341,12 +361,14 @@ public class NewsReaderController {
 			btnNewArticle.setDisable(false);
 			btnEditArticle.setDisable(false);
 			btnDeleteArticle.setDisable(false);
+			btnLogout.setDisable(false);
 			btnLogin.setVisible(false);
 		} else {
 			btnLoadArticle.setDisable(false);
 			btnNewArticle.setDisable(false);
 			btnEditArticle.setDisable(true);
 			btnDeleteArticle.setDisable(true);
+			btnLogout.setDisable(true);
 			btnLogin.setVisible(true);
 		}
 	}
@@ -361,8 +383,20 @@ public class NewsReaderController {
 	public void setUsr(User usr) {
 		this.usr = usr;
 
+		if (this.usr != null) {
+			lblUser.setText("Welcome back, " + this.usr.getLogin() + "!");
+			lblUser.setVisible(true);
+		} else {
+			hideWelcomeMessage();
+		}
+
 		getData();
 		checkMenuItems();
+	}
+
+	private void hideWelcomeMessage() {
+		lblUser.setText("");
+		lblUser.setVisible(false);
 	}
 
 	/**
