@@ -17,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 
 /**
  * @author ÁngelLucas
@@ -59,25 +60,17 @@ public class ArticleDetailsController {
 	private Pane root;
 
 	private NewsReaderController newsReaderController;
-	
-	public ArticleDetailsController(NewsReaderController newsReaderController) {
-		this.newsReaderController = newsReaderController;
-		
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.NEWS_DETAILS.getFxmlFile()));
-			loader.setController(this);
-			root = loader.load();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 
-	public void setNewsReaderController(NewsReaderController newsReaderController) {
-		this.newsReaderController = newsReaderController;
+	public void setContent(Pane root) {
+		this.root = root;
 	}
 
 	public Pane getContent() {
 		return root;
+	}
+
+	public void setNewsReaderController(NewsReaderController newsReaderController) {
+		this.newsReaderController = newsReaderController;
 	}
 
 	@FXML
@@ -104,7 +97,7 @@ public class ArticleDetailsController {
 	@FXML
 	private void btnBackClicked(ActionEvent event) {
 		Button eventOrigin = (Button) event.getSource();
-		// eventOrigin.getScene().setRoot(newsReaderController.getContent());
+		eventOrigin.getScene().setRoot(newsReaderController.getContent());
 	}
 
 	@FXML

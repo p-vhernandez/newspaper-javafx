@@ -22,6 +22,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -38,7 +39,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import serverConection.ConnectionManager;
 import serverConection.exceptions.ServerCommunicationError;
 
@@ -88,27 +91,20 @@ public class NewsReaderController {
 	private Label lblUser;
 
 	private User usr;
-	private Pane root;
 	private Article selectedArticle;
 
 	private Main main;
 	private NewsReaderModel newsReaderModel = new NewsReaderModel();
 
-	// public NewsReaderController() {
-	// 	newsReaderModel.setDummyData(true);
+	private Pane root;
 
-	// 	try {
-	// 		FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.READER.getFxmlFile()));
-	// 		loader.setController(this);
-	// 		root = loader.load();
-	// 	} catch (IOException e) {
-	// 		e.printStackTrace();
-	// 	}
-	// }
+	public void setContent(Pane root) {
+		this.root = root;
+	}
 
-	// public Pane getContent() {
-	// 	return root;
-	// }
+	public Pane getContent() {
+		return root;
+	}
 
 	/**
 	 * This method is called after the screen (FXML file) has been loaded.
@@ -169,12 +165,18 @@ public class NewsReaderController {
 	@FXML
 	private void readMore(ActionEvent event) {
 		try {
-			ArticleDetailsController detailsController = new ArticleDetailsController(this);
+			Button eventOrigin = (Button) event.getSource();
+			Scene parentScene = eventOrigin.getScene();
+
+			FXMLLoader loader = new FXMLLoader (getClass().getResource(AppScenes.NEWS_DETAILS.getFxmlFile()));
+			Pane articleRoot = loader.load();
+			parentScene.setRoot(articleRoot);
+
+			ArticleDetailsController detailsController = loader.<ArticleDetailsController>getController(); 
+			detailsController.setContent(articleRoot);
+			detailsController.setNewsReaderController(this);
 			detailsController.setUsr(usr);
 			detailsController.setArticle(selectedArticle);
-
-			Button eventOrigin = (Button) event.getSource();
-			eventOrigin.getScene().setRoot(detailsController.getContent());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

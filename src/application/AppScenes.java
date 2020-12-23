@@ -10,14 +10,15 @@ package application;
  *
  */
 public enum AppScenes {
-	LOGIN("/application/fxml/Login.fxml"), 
+	LOGIN("fxml/Login.fxml"), 
 	READER("fxml/NewsReader.fxml"), 
- 	NEWS_DETAILS ("/application/fxml/ArticleDetails.fxml"),
-	EDITOR("/application/fxml/ArticleEdit.fxml"), 
-	CREATOR("/application/fxml/ArticleNew.fxml"), 
-	ADMIN("/application/fxml/AdminNews.fxml"),
-	IMAGE_PICKER("/application/fxml/ImagePicker.fxml");
-	// IMAGE_PICKER("/application/fxml/ImagePickerMaterailDesign.fxml");
+	READER_FROM_CONTROLLERS("../fxml/NewsReader.fxml"), 
+ 	NEWS_DETAILS("../fxml/ArticleDetails.fxml"),
+	EDITOR("fxml/ArticleEdit.fxml"), 
+	CREATOR("fxml/ArticleNew.fxml"), 
+	ADMIN("fxml/AdminNews.fxml"),
+	IMAGE_PICKER("fxml/ImagePicker.fxml");
+	// IMAGE_PICKER("fxml/ImagePickerMaterailDesign.fxml");
  
 	private String fxmlFile;
  
