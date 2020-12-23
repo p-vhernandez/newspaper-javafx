@@ -264,7 +264,7 @@ public class ArticleEditController {
 	@FXML
 	private void btnBackClicked(ActionEvent event) {
 		Button eventOrigin = (Button) event.getSource();
-		eventOrigin.getScene().setRoot(newsReaderController.getContent());
+		// eventOrigin.getScene().setRoot(newsReaderController.getContent());
 	}
 
 	private void changeBtnChangeText(String text) {

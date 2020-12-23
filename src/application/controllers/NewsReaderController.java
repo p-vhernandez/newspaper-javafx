@@ -94,21 +94,21 @@ public class NewsReaderController {
 	private Main main;
 	private NewsReaderModel newsReaderModel = new NewsReaderModel();
 
-	public NewsReaderController() {
-		newsReaderModel.setDummyData(true);
+	// public NewsReaderController() {
+	// 	newsReaderModel.setDummyData(true);
 
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.READER.getFxmlFile()));
-			loader.setController(this);
-			root = loader.load();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+	// 	try {
+	// 		FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.READER.getFxmlFile()));
+	// 		loader.setController(this);
+	// 		root = loader.load();
+	// 	} catch (IOException e) {
+	// 		e.printStackTrace();
+	// 	}
+	// }
 
-	public Pane getContent() {
-		return root;
-	}
+	// public Pane getContent() {
+	// 	return root;
+	// }
 
 	/**
 	 * This method is called after the screen (FXML file) has been loaded.

@@ -1,11 +1,13 @@
 package application;
 
+import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import application.controllers.NewsReaderController;
 import application.news.User;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import serverConection.ConnectionManager;
@@ -20,19 +22,27 @@ public class Main extends Application {
 	private NewsReaderController newsReaderController;
 
 	@Override
-	public void start(Stage primaryStage) {		
-		newsReaderController = new NewsReaderController();
-		newsReaderController.setMainController(this);
-		Pane root = newsReaderController.getContent();
-		setConnection();
+	public void start(Stage primaryStage) {
+		// newsReaderController = new NewsReaderController();
+		// newsReaderController.setMainController(this);
 
-		Scene scene = new Scene(root);
-		scene.getStylesheets().add(getClass().getResource("css/application.css").toExternalForm());
-		primaryStage.setTitle("Newspaper");
-		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("../images/ic_news.png")));
-		primaryStage.initStyle(StageStyle.DECORATED);
-		primaryStage.setScene(scene);
-		primaryStage.show();
+		
+		try {
+			FXMLLoader loader = new FXMLLoader (getClass().getResource(AppScenes.READER.getFxmlFile()));
+			Pane root = loader.load();
+			newsReaderController = loader.<NewsReaderController>getController();
+			setConnection();	
+
+			Scene scene = new Scene(root);
+			scene.getStylesheets().add(getClass().getResource("css/application.css").toExternalForm());
+			primaryStage.setTitle("Newspaper");
+			primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("../images/ic_news.png")));
+			primaryStage.initStyle(StageStyle.DECORATED);
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void setConnection() {

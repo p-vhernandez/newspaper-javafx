@@ -66,7 +66,7 @@ public class LoginController {
 			newsReaderController.setUsr(loggedUser);
 
 			Button eventOrigin = (Button) event.getSource();
-			eventOrigin.getScene().setRoot(newsReaderController.getContent());
+			// eventOrigin.getScene().setRoot(newsReaderController.getContent());
 		} else {
 			// TODO: show error
 		}
@@ -75,7 +75,7 @@ public class LoginController {
 	@FXML
 	private void btnBackClicked(ActionEvent event) {
 		Button eventOrigin = (Button) event.getSource();
-		eventOrigin.getScene().setRoot(newsReaderController.getContent());
+		// eventOrigin.getScene().setRoot(newsReaderController.getContent());
 	}
 	
 }

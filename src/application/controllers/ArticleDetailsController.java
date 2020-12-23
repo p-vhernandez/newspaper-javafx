@@ -104,7 +104,7 @@ public class ArticleDetailsController {
 	@FXML
 	private void btnBackClicked(ActionEvent event) {
 		Button eventOrigin = (Button) event.getSource();
-		eventOrigin.getScene().setRoot(newsReaderController.getContent());
+		// eventOrigin.getScene().setRoot(newsReaderController.getContent());
 	}
 
 	@FXML

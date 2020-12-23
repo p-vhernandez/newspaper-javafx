@@ -11,7 +11,7 @@ package application;
  */
 public enum AppScenes {
 	LOGIN("/application/fxml/Login.fxml"), 
-	READER("/application/fxml/NewsReader.fxml"), 
+	READER("fxml/NewsReader.fxml"), 
  	NEWS_DETAILS ("/application/fxml/ArticleDetails.fxml"),
 	EDITOR("/application/fxml/ArticleEdit.fxml"), 
 	CREATOR("/application/fxml/ArticleNew.fxml"), 
