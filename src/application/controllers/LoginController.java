@@ -30,21 +30,16 @@ public class LoginController {
 	@FXML
 	TextField passwordField;
 
-	public LoginController(NewsReaderController newsReaderController) {
-		this.newsReaderController = newsReaderController;
-		loginModel.setDummyData(false);
-
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(AppScenes.LOGIN.getFxmlFile()));
-			loader.setController(this);
-			root = loader.load();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public void setContent(Pane root) {
+		this.root = root;
 	}
 
 	public Pane getContent() {
 		return root;
+	}
+
+	public void setNewsReaderController(NewsReaderController newsReaderController) {
+		this.newsReaderController = newsReaderController;
 	}
 	
 	public User getLoggedUsr() {
@@ -66,7 +61,7 @@ public class LoginController {
 			newsReaderController.setUsr(loggedUser);
 
 			Button eventOrigin = (Button) event.getSource();
-			// eventOrigin.getScene().setRoot(newsReaderController.getContent());
+			eventOrigin.getScene().setRoot(newsReaderController.getContent());
 		} else {
 			// TODO: show error
 		}
@@ -75,7 +70,7 @@ public class LoginController {
 	@FXML
 	private void btnBackClicked(ActionEvent event) {
 		Button eventOrigin = (Button) event.getSource();
-		// eventOrigin.getScene().setRoot(newsReaderController.getContent());
+		eventOrigin.getScene().setRoot(newsReaderController.getContent());
 	}
 	
 }

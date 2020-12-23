@@ -191,11 +191,16 @@ public class NewsReaderController {
 	@FXML
 	private void btnLoginClicked(ActionEvent event) {
 		try {
-			LoginController loginController = new LoginController(this);
-			loginController.setConnectionManager(newsReaderModel.getConnectionManager());
-
 			Button eventOrigin = (Button) event.getSource();
-			eventOrigin.getScene().setRoot(loginController.getContent());
+			Scene parentScene = eventOrigin.getScene();
+
+			FXMLLoader loader = new FXMLLoader (getClass().getResource(AppScenes.LOGIN.getFxmlFile()));
+			Pane loginRoot = loader.load();
+			parentScene.setRoot(loginRoot);
+
+			LoginController loginController = loader.<LoginController>getController();
+			loginController.setNewsReaderController(this);
+			loginController.setConnectionManager(newsReaderModel.getConnectionManager());
 
 			// autoLogin();
 		} catch (Exception e) {

@@ -10,7 +10,7 @@ package application;
  *
  */
 public enum AppScenes {
-	LOGIN("fxml/Login.fxml"), 
+	LOGIN("../fxml/Login.fxml"), 
 	READER("fxml/NewsReader.fxml"), 
 	READER_FROM_CONTROLLERS("../fxml/NewsReader.fxml"), 
  	NEWS_DETAILS("../fxml/ArticleDetails.fxml"),
