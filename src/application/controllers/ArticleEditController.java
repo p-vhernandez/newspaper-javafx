@@ -260,6 +260,8 @@ public class ArticleEditController {
 
 	@FXML
 	private void btnBackClicked(ActionEvent event) {
+		// newsReaderController.addMenuChild();
+
 		Button eventOrigin = (Button) event.getSource();
 		eventOrigin.getScene().setRoot(newsReaderController.getContent());
 	}

@@ -234,6 +234,7 @@ public class NewsReaderController {
 			Article articleToLoad;
 			try {
 				articleToLoad = JsonArticle.jsonToArticle(jsonArticle);
+				removeMenuChild();
 
 				MenuItem eventOrigin = (MenuItem) event.getSource();
 				ContextMenu contextMenu = eventOrigin.getParentPopup();
@@ -261,6 +262,8 @@ public class NewsReaderController {
 	@FXML
 	private void btnNewArticleClicked(ActionEvent event) {
 		try {
+			removeMenuChild();
+
 			MenuItem eventOrigin = (MenuItem) event.getSource();
 			ContextMenu contextMenu = eventOrigin.getParentPopup();
 			Scene parentScene = contextMenu.getOwnerWindow().getScene();
@@ -285,6 +288,8 @@ public class NewsReaderController {
 	private void btnEditArticleClicked(ActionEvent event) {
 		if (selectedArticle != null) {
 			try {
+				removeMenuChild();
+
 				MenuItem eventOrigin = (MenuItem) event.getSource();
 				ContextMenu contextMenu = eventOrigin.getParentPopup();
 				Scene parentScene = contextMenu.getOwnerWindow().getScene();
@@ -438,6 +443,14 @@ public class NewsReaderController {
 	 */
 	public void setMainController(Main main) {
 		this.main = main;
+	}
+
+	private void removeMenuChild() {
+		btnMenu.hide();
+	}
+
+	public void addMenuChild() {
+		btnMenu.show();
 	}
 
 }
