@@ -54,10 +54,10 @@ public class Article {
 	 * Default constructor
 	 */
 	public Article() {
-		abstractText =  new SimpleStringProperty(this, "abstractText","");
-		bodyText =  new SimpleStringProperty(this, "bodyText","");
-		title = new SimpleStringProperty(this, "title","");
-		subtitle = new SimpleStringProperty(this, "subtitle","");
+		abstractText =  new SimpleStringProperty(this, "abstractText", "");
+		bodyText =  new SimpleStringProperty(this, "bodyText", "");
+		title = new SimpleStringProperty(this, "title", "");
+		subtitle = new SimpleStringProperty(this, "subtitle", "");
 		isDeleted= new SimpleBooleanProperty (this,"isDeleted", false);
 		needBeSaved = false;
 	}

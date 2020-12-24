@@ -302,7 +302,7 @@ public class NewsReaderController {
 				editController.setContent(editorRoot);
 				editController.setNewsReaderController(this);
 				editController.setUsr(usr);
-				editController.setArticle(null);
+				editController.setArticle(selectedArticle);
 				editController.setConnectionMannager(newsReaderModel.getConnectionManager());
 			} catch (Exception e) {
 				e.printStackTrace();
