@@ -3,21 +3,16 @@
  */
 package application.controllers;
 
-import java.io.IOException;
-
-import application.AppScenes;
 import application.news.Article;
 import application.news.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import javafx.stage.Stage;
 
 /**
  * @author ÁngelLucas
