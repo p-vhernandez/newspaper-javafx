@@ -4,7 +4,6 @@
 package application.controllers;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -40,9 +39,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import serverConection.ConnectionManager;
 import serverConection.exceptions.ServerCommunicationError;
 
@@ -51,6 +48,19 @@ import serverConection.exceptions.ServerCommunicationError;
  *
  */
 public class NewsReaderController {
+
+	private static final String INFO_FILE_EXTENSION = "*.news";
+	private static final String INFO_ACCEPTED_FILES = "NEWS files (*.news)";
+	private static final String ALERT_ERROR_GENERIC = "There has been an error";
+	private static final String ALERT_ERROR_NULL_FILE_PATH = "An error ocurred while trying to access the file path: it is null.";
+	private static final String ALERT_ERROR_GO_TO_NEW_ARTICLE = "An error ocurred while trying to open the article creation screen, please try again later.";
+	private static final String ALERT_ERROR_EMPTY_JSON_DATA = "The article data could not be retrieved from the file path chosen.";
+	private static final String ALERT_ERROR_LOAD_ARTICLE_DATA = "An error ocurred while trying to load the article's data, please try again later.";
+	private static final String ALERT_EDIT_TITLE = "Want to edit an article?";
+	private static final String ALERT_EDIT_CONTENT_TEXT = "An article from the list must be selected in order to edit it.";
+	private static final String ALERT_DELETE_TITLE = "Want to delete an article?";
+	private static final String ALERT_DELETE_CONTENT_TEXT = "An article from the list must be selected in order to delete it.";
+	private static final String ALERT_DELETE_CONFIRMATION = "Are you sure you want to delete the selected article?";
 
 	@FXML
 	private ListView<Article> listArticles;
@@ -234,7 +244,7 @@ public class NewsReaderController {
 	@FXML
 	private void btnLoadArticleClicked(ActionEvent event) {
 		FileChooser fileChooser = new FileChooser();
-		FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter("NEWS files (*.news)", "*.news");
+		FileChooser.ExtensionFilter extensionFilter = new FileChooser.ExtensionFilter(INFO_ACCEPTED_FILES, INFO_FILE_EXTENSION);
 		fileChooser.getExtensionFilters().add(extensionFilter);
 
 		Stage stage = (Stage) root.getScene().getWindow();
@@ -244,7 +254,7 @@ public class NewsReaderController {
 		if (file != null) {
 			jsonArticle = JsonArticle.readFile(file.getPath());
 		} else {
-			// TODO: show error
+			showInformativeAlert(ALERT_ERROR_GENERIC, ALERT_ERROR_NULL_FILE_PATH);
 		}
 
 		if (jsonArticle != null) {
@@ -268,11 +278,11 @@ public class NewsReaderController {
 				editController.setArticle(articleToLoad);
 				editController.setConnectionMannager(newsReaderModel.getConnectionManager());
 			} catch (Exception e) {
-				// TODO: show error
 				e.printStackTrace();
+				showInformativeAlert(ALERT_ERROR_GENERIC, ALERT_ERROR_LOAD_ARTICLE_DATA);
 			}
 		} else {
-			// TODO: show error
+			showInformativeAlert(ALERT_ERROR_GENERIC, ALERT_ERROR_EMPTY_JSON_DATA);
 		}
 	}
 
@@ -296,8 +306,8 @@ public class NewsReaderController {
 			editController.setArticle(null);
 			editController.setConnectionMannager(newsReaderModel.getConnectionManager());
 		} catch (Exception e) {
-			// TODO: show error
 			e.printStackTrace();
+			showInformativeAlert(ALERT_ERROR_GENERIC, ALERT_ERROR_GO_TO_NEW_ARTICLE);
 		}
 	}
 
@@ -325,11 +335,7 @@ public class NewsReaderController {
 				e.printStackTrace();
 			}
 		} else {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Want to edit an article?");
-			alert.setHeaderText(null);
-			alert.setContentText("An article from the list must be selected in order to edit it.");
-			alert.showAndWait();
+			showInformativeAlert(ALERT_EDIT_TITLE, ALERT_EDIT_CONTENT_TEXT);
 		}
 	}
 
@@ -338,9 +344,9 @@ public class NewsReaderController {
 		if (selectedArticle != null) {
 			try {
 				Alert alert = new Alert(AlertType.CONFIRMATION);
-				alert.setTitle("Delete article");
+				alert.setTitle(ALERT_DELETE_TITLE);
 				alert.setHeaderText(null);
-				alert.setContentText("Are you sure you want to delete the selected article?");
+				alert.setContentText(ALERT_DELETE_CONFIRMATION);
 				
 				Optional<ButtonType> result = alert.showAndWait();
 				if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -352,12 +358,16 @@ public class NewsReaderController {
 				e.printStackTrace();
 			}
 		} else {
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Want to delete an article?");
-			alert.setHeaderText(null);
-			alert.setContentText("An article from the list must be selected in order to delete it.");
-			alert.showAndWait();
+			showInformativeAlert(ALERT_DELETE_TITLE, ALERT_DELETE_CONTENT_TEXT);
 		}
+	}
+
+	private void showInformativeAlert(String title, String contentText) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle(title);
+		alert.setHeaderText(null);
+		alert.setContentText(contentText);
+		alert.showAndWait();
 	}
 
 	/**
