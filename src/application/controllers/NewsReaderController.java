@@ -17,6 +17,7 @@ import application.news.Article;
 import application.news.Categories;
 import application.news.User;
 import application.utils.JsonArticle;
+import application.utils.exceptions.ErrorMalFormedArticle;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -176,9 +177,25 @@ public class NewsReaderController {
 			detailsController.setContent(articleRoot);
 			detailsController.setNewsReaderController(this);
 			detailsController.setUsr(usr);
-			detailsController.setArticle(selectedArticle);
+			detailsController.setArticle(getFullArticle());
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Download full article's data since the actual
+	 * data only has the thumbnail_image instead of the image
+	 * 
+	 * @return selected article obj
+	 */
+	private Article getFullArticle() {
+		try {
+			JsonObject jsonFullArticle = newsReaderModel.getConnectionManager().downloadFullArticle(selectedArticle.getIdArticle());
+			return JsonArticle.jsonToArticle(jsonFullArticle);
+		} catch (ErrorMalFormedArticle e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 
@@ -302,7 +319,7 @@ public class NewsReaderController {
 				editController.setContent(editorRoot);
 				editController.setNewsReaderController(this);
 				editController.setUsr(usr);
-				editController.setArticle(selectedArticle);
+				editController.setArticle(getFullArticle());
 				editController.setConnectionMannager(newsReaderModel.getConnectionManager());
 			} catch (Exception e) {
 				e.printStackTrace();

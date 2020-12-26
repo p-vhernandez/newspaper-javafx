@@ -237,16 +237,16 @@ public class ConnectionManager {
 
 				for (int i = 0; i < arryObj.size(); i++) {
 					JsonObject obj = arryObj.getJsonObject(i);
-					Article article = getFullArticle(obj);
+					// Article article = getFullArticle(obj);
 
-					if (article != null) {
-						result.add(article);
-					}
+					// if (article != null) {
+					// 	result.add(article);
+					// }
 
-					// System.err.println(JsonArticle.jsonToArticle(obj).getThumbnailData());
-					// result.add(JsonArticle.jsonToArticle(obj));
+					Article article = JsonArticle.jsonToArticle(obj);
+					result.add(article);
 				}
-			} catch (IOException e) {
+			} catch (IOException | ErrorMalFormedArticle e) {
 				e.printStackTrace();
 			}
 		}
@@ -264,7 +264,7 @@ public class ConnectionManager {
 	private Article getFullArticle(JsonObject obj) {
 		try {
 			Article article;
-			obj = downloadFullArticle(obj.getString("id"));
+			obj = downloadFullArticle(Integer.valueOf(obj.getString("id")));
 
 			if (obj != null) {
 				article = JsonArticle.jsonToArticle(obj);
@@ -284,7 +284,7 @@ public class ConnectionManager {
 	 * @param idArticle the id for article to retrieve
 	 * @return a jsonObject with the article data
 	 */
-	private JsonObject downloadFullArticle(String idArticle) {
+	public JsonObject downloadFullArticle(int idArticle) {
 		String parameters =  "";
 		String request = serviceUrl + "article/" + idArticle;
 		HttpURLConnection connection =  this.getHttpURLConection(
