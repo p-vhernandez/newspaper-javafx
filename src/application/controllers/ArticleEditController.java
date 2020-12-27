@@ -5,6 +5,8 @@ import java.io.IOException;
 
 import javax.json.JsonObject;
 
+import com.jfoenix.controls.JFXTextField;
+
 import application.AppScenes;
 import application.models.ArticleEditModel;
 import application.news.Article;
@@ -44,10 +46,10 @@ import serverConection.exceptions.ServerCommunicationError;
 public class ArticleEditController {
 
 	@FXML
-	private TextArea txtTitle;
+	private JFXTextField txtTitle;
 
 	@FXML
-	private TextArea txtSubtitle;
+	private JFXTextField txtSubtitle;
 
 	@FXML
 	private ImageView imgArticle;
