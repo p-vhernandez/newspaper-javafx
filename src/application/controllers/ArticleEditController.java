@@ -5,6 +5,8 @@ import java.io.IOException;
 
 import javax.json.JsonObject;
 
+import com.jfoenix.controls.JFXTextField;
+
 import application.AppScenes;
 import application.models.ArticleEditModel;
 import application.news.Article;
@@ -23,7 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -44,10 +46,10 @@ import serverConection.exceptions.ServerCommunicationError;
 public class ArticleEditController {
 
 	@FXML
-	private TextArea txtTitle;
+	private JFXTextField txtTitle;
 
 	@FXML
-	private TextArea txtSubtitle;
+	private JFXTextField txtSubtitle;
 
 	@FXML
 	private ImageView imgArticle;
@@ -79,6 +81,9 @@ public class ArticleEditController {
 	@FXML
 	private Button btnBack;
 
+	@FXML
+	private Label lblUser;
+
     private ConnectionManager connection;
 	private ArticleEditModel editingArticle;
 	private User usr;
@@ -109,7 +114,7 @@ public class ArticleEditController {
 	}
 
 	@FXML
-	void initialize() {
+	void initialize() {		
 		categories = FXCollections.observableArrayList();
 
 		vBoxAbstract.managedProperty().bind(vBoxAbstract.visibleProperty());
@@ -188,7 +193,6 @@ public class ArticleEditController {
 			try {
 				loader = new FXMLLoader(getClass().getResource(AppScenes.IMAGE_PICKER.getFxmlFile()));
 				Pane root = loader.load();
-				// Scene scene = new Scene(root, 570, 420);
 				Scene scene = new Scene(root);
 				scene.getStylesheets().add(getClass().getResource("../css/application.css").toExternalForm());
 				Window parentStage = parentScene.getWindow();
@@ -260,8 +264,6 @@ public class ArticleEditController {
 
 	@FXML
 	private void btnBackClicked(ActionEvent event) {
-		// newsReaderController.addMenuChild();
-
 		Button eventOrigin = (Button) event.getSource();
 		eventOrigin.getScene().setRoot(newsReaderController.getContent());
 	}
@@ -334,6 +336,8 @@ public class ArticleEditController {
 			disableSendBtn();
 		} else {
 			enableSendBtn();
+			lblUser.setText("Welcome back, " + this.usr.getLogin() + "!");
+			lblUser.setVisible(true);
 		}
 	}
 

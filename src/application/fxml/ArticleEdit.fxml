@@ -1,21 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 <?import javafx.scene.web.HTMLEditor?>
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.ArticleEditController">
    <children>
       <VBox fx:id="fullContent" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox prefHeight="200.0" prefWidth="200.0">
+            <Label fx:id="lblUser" prefWidth="290.0" text="Welcome back, DEV_TEAM_3!">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+            </Label>
+            <HBox prefHeight="180.0" prefWidth="200.0">
                <children>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
@@ -28,51 +38,66 @@
                   </VBox>
                   <VBox prefHeight="200.0" prefWidth="600.0">
                      <HBox.margin>
-                        <Insets />
+                        <Insets right="20.0" top="10.0" />
                      </HBox.margin>
                      <children>
-                        <Label text="Title:">
-                           <VBox.margin>
-                              <Insets left="20.0" top="15.0" />
-                           </VBox.margin>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                        </Label>
-                        <TextArea fx:id="txtTitle" layoutX="30.0" layoutY="151.0" prefHeight="50.0">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
                            <VBox.margin>
                               <Insets left="20.0" right="20.0" top="10.0" />
                            </VBox.margin>
-                        </TextArea>
-                        <Label text="Subtitle:">
+                        </Text>
+                        <AnchorPane style="-fx-border-color: #8A8886;">
+                           <children>
+                              <JFXTextField fx:id="txtTitle" focusColor="#405aa800" layoutX="10.0" layoutY="2.0" prefWidth="258.0" promptText="Title" unFocusColor="#4d4d4d00" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="1.0">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </JFXTextField>
+                           </children>
                            <VBox.margin>
-                              <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                              <Insets left="20.0" right="20.0" top="10.0" />
                            </VBox.margin>
-                           <padding>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                           </padding>
-                        </Label>
-                        <TextArea fx:id="txtSubtitle" layoutX="30.0" layoutY="67.0" prefHeight="50.0">
+                        </AnchorPane>
+                        <Text layoutX="30.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Subtitle">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
                            <VBox.margin>
-                              <Insets left="20.0" right="20.0" />
+                              <Insets left="20.0" right="20.0" top="15.0" />
                            </VBox.margin>
-                        </TextArea>
+                        </Text>
+                        <AnchorPane layoutX="30.0" layoutY="51.0" style="-fx-border-color: #8A8886;">
+                           <children>
+                              <JFXTextField fx:id="txtSubtitle" focusColor="#405aa800" layoutX="10.0" layoutY="2.0" prefWidth="258.0" promptText="Subtitle" unFocusColor="#4d4d4d00" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="1.0">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </JFXTextField>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="20.0" right="20.0" top="10.0" />
+                           </VBox.margin>
+                        </AnchorPane>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <Label text="Category:">
+                              <JFXComboBox fx:id="categorySelector" focusColor="#0078d400" prefHeight="26.0" prefWidth="290.0" promptText="Select category..." style="-fx-border-color: #8A8886;" unFocusColor="#4d4d4d00">
                                  <padding>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    <Insets bottom="5.0" left="8.0" right="5.0" top="5.0" />
                                  </padding>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
                                  <HBox.margin>
-                                    <Insets left="20.0" right="20.0" top="20.0" />
+                                    <Insets left="20.0" top="15.0" />
                                  </HBox.margin>
-                              </Label>
-                              <ComboBox fx:id="categorySelector" prefWidth="250.0">
-                                 <HBox.margin>
-                                    <Insets left="20.0" right="20.0" top="20.0" />
-                                 </HBox.margin>
-                              </ComboBox>
+                              </JFXComboBox>
                            </children>
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
                         </HBox>
                      </children>
                   </VBox>
@@ -80,15 +105,18 @@
             </HBox>
             <VBox fx:id="vBoxAbstract" prefHeight="350.0" prefWidth="100.0">
                <children>
-                  <Label text="Abstract:">
+                  <Label text="Abstract">
                      <VBox.margin>
                         <Insets left="20.0" right="20.0" />
                      </VBox.margin>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
                   </Label>
-                  <HTMLEditor fx:id="abstractEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" prefHeight="300.0" prefWidth="506.0">
+                  <HTMLEditor fx:id="abstractEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" prefWidth="506.0">
                      <VBox.margin>
                         <Insets bottom="20.0" left="20.0" right="20.0" />
                      </VBox.margin>
@@ -114,23 +142,42 @@
             </VBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="btnSend" disable="true" mnemonicParsing="false" onAction="#btnSendClicked" style="-fx-background-color: black; -fx-text-fill: white; -fx-font-weight: bold; -fx-min-width: 120px;" text="Send &amp; back">
+                  <JFXButton fx:id="btnSend" layoutX="729.0" layoutY="10.0" onAction="#btnSendClicked" prefHeight="32.0" prefWidth="126.0" ripplerFill="#deecf900" style="-fx-background-color: #FFFFFF; -fx-border-color: #0078D4;" text="Send &amp; back" textFill="#0078d4">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
                      <HBox.margin>
-                        <Insets left="20.0" right="20.0" />
+                        <Insets left="15.0" right="15.0" />
                      </HBox.margin>
-                  </Button>
-                  <Button fx:id="btnSave" mnemonicParsing="false" onAction="#btnSaveClicked" style="-fx-background-color: black; -fx-text-fill: white; -fx-font-weight: bold; -fx-min-width: 120px;" text="Save to file">
+                  </JFXButton>
+                  <JFXButton fx:id="btnSave" layoutX="569.0" layoutY="10.0" onAction="#btnSaveClicked" prefHeight="32.0" prefWidth="126.0" ripplerFill="#deecf900" style="-fx-background-color: #0078D4; -fx-border-color: #0078D4;" text="Save to file" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
                      <HBox.margin>
-                        <Insets right="20.0" />
+                        <Insets left="15.0" right="15.0" />
                      </HBox.margin>
-                  </Button>
-                  <Button fx:id="btnChange" mnemonicParsing="false" onAction="#btnChangeClicked" style="-fx-background-color: black; -fx-text-fill: white; -fx-font-weight: bold; -fx-min-width: 120px;" text="Write body">
+                  </JFXButton>
+                  <JFXButton fx:id="btnChange" onAction="#btnChangeClicked" prefHeight="32.0" prefWidth="126.0" ripplerFill="#deecf900" style="-fx-background-color: #0078D4; -fx-border-color: #0078D4;" text="Write body" textFill="WHITE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
                      <HBox.margin>
-                        <Insets right="20.0" />
+                        <Insets left="15.0" right="15.0" />
                      </HBox.margin>
-                  </Button>
-                  <Button fx:id="btnBack" disable="true" mnemonicParsing="false" onAction="#btnBackClicked" style="-fx-background-color: black; -fx-text-fill: white; -fx-font-weight: bold; -fx-min-width: 120px;" text="Back" />
+                  </JFXButton>
+                  <JFXButton fx:id="btnBack" onAction="#btnBackClicked" prefHeight="32.0" prefWidth="126.0" ripplerFill="#deecf900" style="-fx-background-color: #FFFFFF; -fx-border-color: #0078D4;" text="Back" textFill="#0078d4">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="15.0" right="15.0" />
+                     </HBox.margin>
+                  </JFXButton>
                </children>
+               <VBox.margin>
+                  <Insets bottom="15.0" top="15.0" />
+               </VBox.margin>
             </HBox>
          </children>
       </VBox>
