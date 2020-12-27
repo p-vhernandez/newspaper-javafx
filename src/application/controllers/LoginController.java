@@ -60,6 +60,7 @@ public class LoginController {
 		User loggedUser = loginModel.validateUser(user, pass);
 		if (loggedUser != null) {
 			newsReaderController.setUsr(loggedUser);
+			newsReaderController.clearArticleSelection();
 
 			Button eventOrigin = (Button) event.getSource();
 			eventOrigin.getScene().setRoot(newsReaderController.getContent());
@@ -71,6 +72,7 @@ public class LoginController {
 	@FXML
 	private void btnBackClicked(ActionEvent event) {
 		Button eventOrigin = (Button) event.getSource();
+		newsReaderController.clearArticleSelection();
 		eventOrigin.getScene().setRoot(newsReaderController.getContent());
 	}
 

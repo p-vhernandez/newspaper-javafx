@@ -122,6 +122,7 @@ public class NewsReaderController {
 	 */
 	@FXML
 	void initialize() {
+		disableReadMore();
 		hideWelcomeMessage();
 		lblUser.managedProperty().bind(lblUser.visibleProperty());
 
@@ -139,6 +140,7 @@ public class NewsReaderController {
 	}
 
 	public void clearArticleSelection() {
+		disableReadMore();
 		listArticles.getSelectionModel().clearSelection();
 
 		articleImage.setImage(null);
@@ -377,7 +379,9 @@ public class NewsReaderController {
 	 */
 	@FXML
 	private void btnLogoutClicked(ActionEvent event) {
+		clearArticleSelection();
 		setUsr(null);
+		getData();
 	}
 
 	/**
@@ -434,6 +438,10 @@ public class NewsReaderController {
 		btnReadMore.setDisable(false);
 	}
 	
+	private void disableReadMore() {
+		btnReadMore.setDisable(true);
+	}
+
 	/**
 	 * @param usr the usr to set
 	 */

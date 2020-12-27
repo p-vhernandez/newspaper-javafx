@@ -114,10 +114,7 @@ public class ArticleEditController {
 	}
 
 	@FXML
-	void initialize() {
-		hideWelcomeMessage();
-		lblUser.managedProperty().bind(lblUser.visibleProperty());
-		
+	void initialize() {		
 		categories = FXCollections.observableArrayList();
 
 		vBoxAbstract.managedProperty().bind(vBoxAbstract.visibleProperty());
@@ -337,17 +334,11 @@ public class ArticleEditController {
 		
 		if (this.usr == null) {
 			disableSendBtn();
-			hideWelcomeMessage();
 		} else {
 			enableSendBtn();
 			lblUser.setText("Welcome back, " + this.usr.getLogin() + "!");
 			lblUser.setVisible(true);
 		}
-	}
-
-	private void hideWelcomeMessage() {
-		lblUser.setText("");
-		lblUser.setVisible(false);
 	}
 
 	public Article getArticle() {

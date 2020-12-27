@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Base64;
@@ -24,7 +23,6 @@ import application.news.Article;
 import application.utils.exceptions.ErrorMalFormedArticle;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
-// import jdk.javadoc.internal.doclets.formats.html.resources.standard;
 
 /**
  * This class provide services for translate an article to JSon and vice versa
