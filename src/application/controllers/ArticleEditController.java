@@ -25,7 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -81,6 +81,9 @@ public class ArticleEditController {
 	@FXML
 	private Button btnBack;
 
+	@FXML
+	private Label lblUser;
+
     private ConnectionManager connection;
 	private ArticleEditModel editingArticle;
 	private User usr;
@@ -112,6 +115,9 @@ public class ArticleEditController {
 
 	@FXML
 	void initialize() {
+		hideWelcomeMessage();
+		lblUser.managedProperty().bind(lblUser.visibleProperty());
+		
 		categories = FXCollections.observableArrayList();
 
 		vBoxAbstract.managedProperty().bind(vBoxAbstract.visibleProperty());
@@ -190,7 +196,6 @@ public class ArticleEditController {
 			try {
 				loader = new FXMLLoader(getClass().getResource(AppScenes.IMAGE_PICKER.getFxmlFile()));
 				Pane root = loader.load();
-				// Scene scene = new Scene(root, 570, 420);
 				Scene scene = new Scene(root);
 				scene.getStylesheets().add(getClass().getResource("../css/application.css").toExternalForm());
 				Window parentStage = parentScene.getWindow();
@@ -262,8 +267,6 @@ public class ArticleEditController {
 
 	@FXML
 	private void btnBackClicked(ActionEvent event) {
-		// newsReaderController.addMenuChild();
-
 		Button eventOrigin = (Button) event.getSource();
 		eventOrigin.getScene().setRoot(newsReaderController.getContent());
 	}
@@ -334,9 +337,17 @@ public class ArticleEditController {
 		
 		if (this.usr == null) {
 			disableSendBtn();
+			hideWelcomeMessage();
 		} else {
 			enableSendBtn();
+			lblUser.setText("Welcome back, " + this.usr.getLogin() + "!");
+			lblUser.setVisible(true);
 		}
+	}
+
+	private void hideWelcomeMessage() {
+		lblUser.setText("");
+		lblUser.setVisible(false);
 	}
 
 	public Article getArticle() {
