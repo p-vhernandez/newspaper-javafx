@@ -108,11 +108,21 @@ public class ArticleEditController {
 		return root;
 	}
 
+	/**
+	 * Differenciate if the user wants to create an article
+	 * or edit an already existing article.
+	 * 
+	 * @param creation - boolean
+	 */
 	public void setArticleCreation(boolean creation) {
 		this.articleCreation = creation;
 		checkCreation();
 	}
 
+	/**
+	 * This method is called after the 
+	 * screen (FXML file) has been loaded.
+	 */
 	@FXML
 	void initialize() {		
 		categories = FXCollections.observableArrayList();
@@ -123,6 +133,10 @@ public class ArticleEditController {
 		setListeners();
 	}
 
+	/**
+	 * Set the listeners to show changes in the 
+	 * screen when an element is clicked.
+	 */
 	private void setListeners() {
 		txtTitle.textProperty().addListener((observable, oldValue, newValue) ->
 			editingArticle.setTitle(newValue));
@@ -134,6 +148,11 @@ public class ArticleEditController {
 			editingArticle.setCategory(newValue));
 	}
 
+	/**
+	 * Enable or disable the title edition 
+	 * depending on the article being created
+	 * or edited.
+	 */
 	private void checkCreation() {
 		if (articleCreation) {
 			txtTitle.setEditable(true);
@@ -144,6 +163,11 @@ public class ArticleEditController {
 		}
 	}
 
+	/**
+	 * Show the selected article's data
+	 * on the screen if the user is editing
+	 * an already existing article. 
+	 */
 	private void showArticleDetails() {
 		if (editingArticle.getArticleOriginal() != null) {
 			txtTitle.setText(editingArticle.getTitle());
@@ -158,16 +182,28 @@ public class ArticleEditController {
 		}
 	}
 
+	/**
+	 * If the article has an image, show it.
+	 * If not, show the generic one used in the main screen.
+	 */
 	private void showArticleImage() {
 		if (editingArticle.getImage() != null) {
 			imgArticle.setImage(editingArticle.getImage());
+		} else {
+			showGenericImage();
 		}
 	}
 
+	/**
+	 * Load and show the generic image of the project.
+	 */
 	private void showGenericImage() {
 		imgArticle.setImage(new Image(getClass().getResourceAsStream("../../images/ic_news.png")));
 	}
 
+	/**
+	 * Load categories.
+	 */
 	private void configureCategoriesData() {
 		if (!categories.isEmpty()) {
 			categories.clear();
@@ -180,10 +216,18 @@ public class ArticleEditController {
 		}
 	}
 
+	/**
+	 * Set the categories into the selector.
+	 */
 	private void configureCategorySelector() {
 		categorySelector.setItems(categories);
 	}
 
+	/**
+	 * Show the image picker. 
+	 * 
+	 * @param event - button event that triggered the action
+	 */
 	@FXML
 	private void onImageClicked(MouseEvent event) {
 		if (event.getClickCount() >= 2) {
@@ -192,8 +236,8 @@ public class ArticleEditController {
 
 			try {
 				loader = new FXMLLoader(getClass().getResource(AppScenes.IMAGE_PICKER.getFxmlFile()));
-				Pane root = loader.load();
-				Scene scene = new Scene(root);
+				Pane pickerRoot = loader.load();
+				Scene scene = new Scene(pickerRoot);
 				scene.getStylesheets().add(getClass().getResource("../css/application.css").toExternalForm());
 				Window parentStage = parentScene.getWindow();
 				Stage stage = new Stage();
@@ -217,6 +261,11 @@ public class ArticleEditController {
 		}
 	}
 
+	/**
+	 * Save the article to the server. 
+	 * 
+	 * @param event - button event that triggered the action
+	 */
 	@FXML
 	private void btnSendClicked(ActionEvent event) {
 		getArticleNewData();
@@ -241,12 +290,22 @@ public class ArticleEditController {
 		}
 	}
 
+	/**
+	 * Save the article locally.
+	 * 
+	 * @param event - button event that triggered the action
+	 */
 	@FXML
 	private void btnSaveClicked(ActionEvent event) {
 		getArticleNewData();
 		write();
 	}
 
+	/**
+	 * Show or hide the editors' visibility.
+	 * 
+	 * @param event - button event that triggered the action
+	 */
 	@FXML
 	private void btnChangeClicked(ActionEvent event) {
 		if (editAbstract) {
@@ -262,16 +321,29 @@ public class ArticleEditController {
 		editAbstract = !editAbstract;
 	}
 
+	/**
+	 * Back to main screen.
+	 * 
+	 * @param event - button event that triggered the action
+	 */
 	@FXML
 	private void btnBackClicked(ActionEvent event) {
 		Button eventOrigin = (Button) event.getSource();
 		eventOrigin.getScene().setRoot(newsReaderController.getContent());
 	}
 
+	/**
+	 * Change the button text.
+	 * 
+	 * @param text - button event that triggered the action
+	 */
 	private void changeBtnChangeText(String text) {
 		btnChange.setText(text);
 	}
 
+	/**
+	 * Get HTML editors' content.
+	 */
 	private void getArticleNewData() {
 		editingArticle.setAbstractText(abstractEditor.getHtmlText());
 		editingArticle.setBodyText(bodyEditor.getHtmlText());

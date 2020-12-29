@@ -118,7 +118,8 @@ public class NewsReaderController {
 	}
 
 	/**
-	 * This method is called after the screen (FXML file) has been loaded.
+	 * This method is called after the 
+	 * screen (FXML file) has been loaded.
 	 */
 	@FXML
 	void initialize() {
@@ -131,6 +132,10 @@ public class NewsReaderController {
 		checkMenuItems();
 	}
 
+	/**
+	 * Retrieve needed data about articles
+	 * and categories through the news reader model.
+	 */
 	void getData() {
 		newsReaderModel.retrieveData();
 
@@ -139,6 +144,10 @@ public class NewsReaderController {
 		selectorCategory.getSelectionModel().select(Categories.ALL);
 	}
 
+	/**
+	 * Un-select the article from the list 
+	 * and clear the interface.
+	 */
 	public void clearArticleSelection() {
 		disableReadMore();
 		listArticles.getSelectionModel().clearSelection();
@@ -149,7 +158,8 @@ public class NewsReaderController {
 	}
 
 	/**
-	 * Set the listeners to show changes in the screen when an element is clicked
+	 * Set the listeners to show changes in the 
+	 * screen when an element is clicked.
 	 */
 	private void setListeners() {
 		listArticles.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -243,6 +253,11 @@ public class NewsReaderController {
 		}
 	}
 
+	/**
+	 * Load an article from a computer file.
+	 * 
+	 * @param event - button event that triggered the action
+	 */
 	@FXML
 	private void btnLoadArticleClicked(ActionEvent event) {
 		FileChooser fileChooser = new FileChooser();
@@ -269,6 +284,7 @@ public class NewsReaderController {
 				ContextMenu contextMenu = eventOrigin.getParentPopup();
 				Scene parentScene = contextMenu.getOwnerWindow().getScene();
 
+				// Load article edition screen
 				FXMLLoader loader = new FXMLLoader (getClass().getResource(AppScenes.EDITOR.getFxmlFile()));
 				Pane editorRoot = loader.load();
 				parentScene.setRoot(editorRoot);
@@ -288,6 +304,11 @@ public class NewsReaderController {
 		}
 	}
 
+	/**
+	 * Show new article creation screen.
+	 * 
+	 * @param event - button event that triggered the action
+	 */
 	@FXML
 	private void btnNewArticleClicked(ActionEvent event) {
 		try {
@@ -313,6 +334,11 @@ public class NewsReaderController {
 		}
 	}
 
+	/**
+	 * Show article edition screen.
+	 * 
+	 * @param event - button event that triggered the action
+	 */
 	@FXML
 	private void btnEditArticleClicked(ActionEvent event) {
 		if (selectedArticle != null) {
@@ -341,6 +367,9 @@ public class NewsReaderController {
 		}
 	}
 
+	/**
+	 * Delete selected article from the list.
+	 */
 	@FXML
 	private void btnDeleteArticleClicked() {
 		if (selectedArticle != null) {
@@ -364,6 +393,11 @@ public class NewsReaderController {
 		}
 	}
 
+	/**
+	 * Show system alert with custom content
+	 * @param title - alert title
+	 * @param contentText - alert content
+	 */
 	private void showInformativeAlert(String title, String contentText) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle(title);
@@ -375,7 +409,8 @@ public class NewsReaderController {
 	/**
 	 * Function that allows the user to log out
 	 * Sets the user to null and retrieves all articles
-	 * @param event
+	 * 
+	 * @param event - button event that triggered the action
 	 */
 	@FXML
 	private void btnLogoutClicked(ActionEvent event) {
@@ -386,7 +421,8 @@ public class NewsReaderController {
 
 	/**
 	 * Function that closes the applciation.
-	 * @param event
+	 * 
+	 * @param event - button event that triggered the action
 	 */
 	@FXML
 	private void btnExitClicked(ActionEvent event) {
@@ -416,6 +452,11 @@ public class NewsReaderController {
 		this.getData();
 	}
 
+	/**
+	 * Enable and/or disable menu buttons
+	 * depending on the user being logged
+	 * in or not.
+	 */
 	private void checkMenuItems() {
 		if (this.usr != null) {
 			btnLoadArticle.setDisable(false);
@@ -459,6 +500,9 @@ public class NewsReaderController {
 		checkMenuItems();
 	}
 
+	/**
+	 * Hide message for the logged user.
+	 */
 	private void hideWelcomeMessage() {
 		lblUser.setText("");
 		lblUser.setVisible(false);
@@ -480,12 +524,11 @@ public class NewsReaderController {
 		this.main = main;
 	}
 
+	/**
+	 * Collapses menu dropdown.
+	 */
 	private void removeMenuChild() {
 		btnMenu.hide();
-	}
-
-	public void addMenuChild() {
-		btnMenu.show();
 	}
 
 }

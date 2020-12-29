@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebEngine;
@@ -68,12 +69,20 @@ public class ArticleDetailsController {
 		this.newsReaderController = newsReaderController;
 	}
 
+	/**
+	 * This method is called after the 
+	 * screen (FXML file) has been loaded.
+	 */
 	@FXML
 	void initialize() {
 		hideWelcomeMessage();
 		lblUser.managedProperty().bind(lblUser.visibleProperty());
 	}
 
+	/**
+	 * Show the selected article's data
+	 * on the screen. 
+	 */
 	private void showArticleDetails() {
 		if (article != null) {
 			lblTitle.setText(article.getTitle());
@@ -85,16 +94,28 @@ public class ArticleDetailsController {
 
 			if (article.getImageData() != null) {
 				imgArticle.setImage(article.getImageData());
+			} else {
+				imgArticle.setImage(new Image(getClass().getResourceAsStream("../../images/ic_news.png")));
 			}
 		}
 	}
 
+	/**
+	 * Back to main screen. 
+	 * 
+	 * @param event - button event that triggered the action
+	 */
 	@FXML
 	private void btnBackClicked(ActionEvent event) {
 		Button eventOrigin = (Button) event.getSource();
 		eventOrigin.getScene().setRoot(newsReaderController.getContent());
 	}
 
+	/**
+	 * Switch between the abstract and the body.
+	 * 
+	 * @param event - button event that triggered the action
+	 */
 	@FXML
 	private void btnChangeContentClicked(ActionEvent event) {
 		if (abstractShown) {
@@ -112,6 +133,11 @@ public class ArticleDetailsController {
 		}
 	}
 
+	/**
+	 * Change the button text.
+	 * 
+	 * @param buttonText - string to show
+	 */
 	private void changeButtonText(String buttonText) {
 		btnChangeContent.setText(buttonText);
 	}
@@ -130,6 +156,9 @@ public class ArticleDetailsController {
 		}
 	}
 
+	/**
+	 * Hide the message for the logged user.
+	 */
 	private void hideWelcomeMessage() {
 		lblUser.setText("");
 		lblUser.setVisible(false);

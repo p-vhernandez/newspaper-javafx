@@ -35,6 +35,9 @@ public class LoginController {
 		this.root = root;
 	}
 
+	/**
+	 * @return root - Pane
+	 */
 	public Pane getContent() {
 		return root;
 	}
@@ -43,6 +46,9 @@ public class LoginController {
 		this.newsReaderController = newsReaderController;
 	}
 	
+	/**
+	 * @return loggedUsr - User instance
+	 */
 	public User getLoggedUsr() {
 		return loggedUsr;
 		
@@ -52,6 +58,11 @@ public class LoginController {
 		this.loginModel.setConnectionManager(connection);
 	}
 
+	/**
+	 * Get user credentials and validate them 
+	 * within the server. Go back to main screen.
+	 * @param event - button event that triggered the action
+	 */
 	@FXML
 	private void btnLoginClicked(ActionEvent event) {
 		String user = usernameField.getText();
@@ -69,6 +80,10 @@ public class LoginController {
 		}
 	}
 
+	/**
+	 * Go back to the main page
+	 * @param event - button event that triggered the action
+	 */
 	@FXML
 	private void btnBackClicked(ActionEvent event) {
 		Button eventOrigin = (Button) event.getSource();
@@ -76,6 +91,11 @@ public class LoginController {
 		eventOrigin.getScene().setRoot(newsReaderController.getContent());
 	}
 
+	/**
+	 * Show system alert with custom content
+	 * @param title - alert title
+	 * @param contentText - alert content
+	 */
 	private void showInformativeAlert(String title, String contentText) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle(title);
